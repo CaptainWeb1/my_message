@@ -1,9 +1,8 @@
 
 class Notifications {
 
-
-  void launchNotifications() {
+ void launchNotifications() {
     print("lancer les notifs");
-  }
+ }
 
 }
