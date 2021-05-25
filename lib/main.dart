@@ -43,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Text',
             ),
-
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
