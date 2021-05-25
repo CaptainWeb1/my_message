@@ -1,6 +1,8 @@
 
 class Notifications {
 
+ void launchNotifications() {
 
+ }
 
 }
