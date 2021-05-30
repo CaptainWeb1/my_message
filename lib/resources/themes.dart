@@ -17,6 +17,7 @@ ThemeData theme = ThemeData(
   buttonTheme: ButtonThemeData(
     buttonColor: Colors.white,
   ),
+  unselectedWidgetColor: MyColors.primary,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: TextButton.styleFrom(
       backgroundColor: MyColors.primary,
@@ -38,7 +39,7 @@ class MyColors {
   static const Color hover = const Color(0xff00e25e);
   static const Color containerColor = const Color(0xff474747);
   static const Color bodyText = const Color(0xffc4c4c4);
-  static const Color iconColors = Color.fromRGBO(0,0,0,0.32);
+  static const Color iconColors = const Color(0xff808080);
 }
 
 class MyTextStyles {
@@ -94,6 +95,7 @@ class MyTextStyles {
 class MyShapes {
 
   static BorderRadiusGeometry circularBorders = BorderRadius.circular(38.0);
+  static BorderRadiusGeometry checkboxBorders = BorderRadius.circular(4.0);
 
 }
 

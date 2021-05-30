@@ -48,6 +48,7 @@ class SignInScreen extends StatelessWidget {
               ),
               SizedBox(height: 25,),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     Strings.noAccount
