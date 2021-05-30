@@ -8,7 +8,7 @@ import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen() : super();
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     TextFieldWidget(hintText: Strings.email,),
                     TextFieldWidget(hintText: Strings.password,),
-                    ButtonWidget(buttonText: Strings.signIn,),
+                    ButtonWidget(buttonText: Strings.signIn, onPressed: () => Navigator.pushNamed(context, PAGE_MESSAGES),),
                   ],
                 ),
               ),

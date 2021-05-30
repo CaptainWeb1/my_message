@@ -19,6 +19,7 @@ class Strings {
 
   //Messages
   static const String tapMessage = "Tapez votre message…";
+  static const String search = "Recherchez...";
   static const String exampleDate = "13/05/21 - 18:50";
 }
 
@@ -27,23 +28,6 @@ class ImagesPaths {
   static const String logoPath = "assets/images/Logo-App-Createur-Pro-sombre.png";
 
 }
-
-/*
-Map data = {
-'text': 'Jean-Michel',
-'text_0': 'Bonjour Florian, comment…',
-'text': 'Micheline',
-'text_0': 'Bonne année',
-'text': 'Brigitte Bardot',
-'text_0': 'La pêche mec, dis moi j’ai…',
-'text': 'Nekfeu',
-'text_0': 'Oui les spaghettis c’est…',
-'text': 'Inconnu',
-'text_0': 'Je suis un inconnu',
-},
-*/
-
-
 
 /*
 GridView.count(

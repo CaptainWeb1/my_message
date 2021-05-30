@@ -10,7 +10,7 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen() : super();
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,10 @@ class SignUpScreen extends StatelessWidget {
                     Spacer(),
                     TextFieldWidget(hintText: Strings.dateSelect, iconData: IconWidget(icon: Icons.calendar_today)),
                     Spacer(),
-                    ButtonWidget(buttonText: Strings.signUp,),
+                    ButtonWidget(
+                      buttonText: Strings.signUp,
+                      onPressed: () => print("s'inscrire"),
+                    ),
                   ],
                 ),
               ),
@@ -69,7 +72,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, PAGE_SIGN_UP),
+                    onPressed: () => Navigator.pushNamed(context, PAGE_SIGN_IN),
                     style: TextButton.styleFrom(
                         padding: EdgeInsets.zero
                     ),

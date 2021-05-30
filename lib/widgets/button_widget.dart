@@ -5,13 +5,17 @@ import 'package:my_message/resources/themes.dart';
 class ButtonWidget extends StatelessWidget {
 
   final String buttonText;
+  final VoidCallback onPressed;
 
-  const ButtonWidget({Key? key, required this.buttonText}) : super(key: key);
+  const ButtonWidget({
+    Key? key, 
+    required this.buttonText, 
+    required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => print("rien"),
+      onPressed: () => onPressed(),
       child: Container(
         alignment: Alignment.center,
         width: double.infinity,
