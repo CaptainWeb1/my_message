@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
+import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
@@ -52,7 +53,7 @@ class SignInScreen extends StatelessWidget {
                     Strings.noAccount
                   ),
                   TextButton(
-                    onPressed: () => print("rien"),
+                    onPressed: () => Navigator.pushNamed(context, PAGE_SIGN_UP),
                     style: TextButton.styleFrom(
                         padding: EdgeInsets.zero
                     ),
