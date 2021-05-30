@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_message/resources/themes.dart';
 import 'package:my_message/screens/sign_in_screen.dart';
 
 void main() {
@@ -11,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Message',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: theme,
       home: SignInScreen(),
       debugShowCheckedModeBanner: false,
     );

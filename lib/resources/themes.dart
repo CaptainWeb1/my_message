@@ -3,7 +3,33 @@ import 'package:flutter/material.dart';
 
 ThemeData theme = ThemeData(
   fontFamily: 'Sana',
-  primaryColor: MyColors.primary
+  primaryColor: MyColors.primary,
+  scaffoldBackgroundColor: MyColors.backgroundPage,
+  appBarTheme: AppBarTheme(
+    backgroundColor: MyColors.containerColor
+  ),
+  textTheme: TextTheme(
+    headline1: MyTextStyles.title1,
+    bodyText1: MyTextStyles.body,
+    bodyText2: MyTextStyles.body,
+  ),
+  hoverColor: MyColors.hover,
+  buttonTheme: ButtonThemeData(
+    buttonColor: Colors.white,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: TextButton.styleFrom(
+      backgroundColor: MyColors.primary,
+      textStyle: MyTextStyles.buttonText,
+      shape: RoundedRectangleBorder(
+        borderRadius: MyShapes.circularBorders
+      )
+    )
+  ),
+  iconTheme: IconThemeData(
+    color: MyColors.iconColors
+  ),
+  buttonColor: MyColors.primary
 );
 
 class MyColors {
@@ -18,22 +44,32 @@ class MyColors {
 class MyTextStyles {
   static const TextStyle title1 = const TextStyle(
     fontFamily: 'PureBold',
-    fontSize: 40,
+    fontSize: 34,
     color: const Color(0xffffffff),
-    letterSpacing: -0.48,
+    letterSpacing: 1.5,
     fontWeight: FontWeight.w700,
   );
   static const TextStyle body = const TextStyle(
     fontFamily: 'Sana',
     fontSize: 18,
     color: const Color(0xffc4c4c4),
-    letterSpacing: -0.14,
   );
   static const TextStyle buttonPlaceHolder = const TextStyle(
     fontFamily: 'Sana',
     fontSize: 21,
     color: const Color(0xff898989),
-    letterSpacing: -0.168,
+    shadows: [
+      Shadow(
+        color: const Color(0x29000000),
+        offset: Offset(0, 3),
+        blurRadius: 6,
+      )
+    ],
+  );
+  static const TextStyle buttonText = const TextStyle(
+    fontFamily: 'Sana',
+    fontSize: 21,
+    color: Colors.white,
     shadows: [
       Shadow(
         color: const Color(0x29000000),
@@ -46,12 +82,23 @@ class MyTextStyles {
     fontFamily: 'Sana',
     fontSize: 18,
     color: const Color(0xff46e288),
-    letterSpacing: -0.14,
   );
   static const TextStyle date = const TextStyle(
     fontFamily: 'Hiragino Sans',
     fontSize: 8,
     color: const Color(0xff717171),
   );
+
+}
+
+class MyShapes {
+
+  static BorderRadiusGeometry circularBorders = BorderRadius.circular(38.0);
+
+}
+
+class MySizes {
+
+  static double minimumHeightInputs = 55;
 
 }

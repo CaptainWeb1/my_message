@@ -5,6 +5,7 @@ class Strings {
 
   //Authentication
   static const String email = "Email";
+  static const String password = "Mot de passe";
   static const String forgetPassword = "Mot de passe oublié ?";
   static const String noAccount = "Vous n’avez pas de compte ?";
   static const String alreadyAccount = "Vous avez déjà un compte ?";
@@ -15,6 +16,11 @@ class Strings {
   //Messages
   static const String tapMessage = "Tapez votre message…";
   static const String exampleDate = "13/05/21 - 18:50";
+}
+
+class ImagesPaths {
+
+  static const String logoPath = "assets/images/Logo-App-Createur-Pro-sombre.png";
 
 }
 
