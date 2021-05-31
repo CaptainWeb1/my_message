@@ -14,30 +14,30 @@ class UserModel {
 }
 
 Map<int, UserModel> users = {
-   1 : UserModel(
+   0 : UserModel(
     uniqueKey: UniqueKey(),
     userName: "Jean-Michel",
-    imagePath: "assets/images/Logo-App-Createur-Pro-sombre.png"
+    imagePath: "assets/images/user_images/Jean-Michel.png"
+  ),
+  1 : UserModel(
+      uniqueKey: UniqueKey(),
+      userName: "Micheline",
+      imagePath: "assets/images/user_images/Micheline.png"
   ),
   2 : UserModel(
       uniqueKey: UniqueKey(),
-      userName: "Micheline",
-      imagePath: "assets/images/Logo-App-Createur-Pro-sombre.png"
+      userName: "Brigitte Bardot",
+      imagePath: "assets/images/user_images/Brigitte Bardot.png"
   ),
   3 : UserModel(
       uniqueKey: UniqueKey(),
-      userName: "Brigitte Bardot",
-      imagePath: "assets/images/Logo-App-Createur-Pro-sombre.png"
+      userName: "Nekfeu",
+      imagePath: "assets/images/user_images/Nekfeu.png"
   ),
   4 : UserModel(
       uniqueKey: UniqueKey(),
-      userName: "Nekfeu",
-      imagePath: "assets/images/Logo-App-Createur-Pro-sombre.png"
-  ),
-  5 : UserModel(
-      uniqueKey: UniqueKey(),
       userName: "Inconnu",
-      imagePath: "assets/images/Logo-App-Createur-Pro-sombre.png"
+      imagePath: "assets/images/user_images/Inconnu.png"
   )
 };
 

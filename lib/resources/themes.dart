@@ -84,10 +84,15 @@ class MyTextStyles {
     fontSize: 18,
     color: const Color(0xff46e288),
   );
-  static const TextStyle date = const TextStyle(
-    fontFamily: 'Hiragino Sans',
+  static const TextStyle dateChatScreen = const TextStyle(
+    fontFamily: 'Sana',
     fontSize: 8,
     color: const Color(0xff717171),
+  );
+  static const TextStyle dateMessagesScreen = const TextStyle(
+    fontFamily: 'Sana',
+    fontSize: 11,
+    color: MyColors.bodyText,
   );
 
 }
