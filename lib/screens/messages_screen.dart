@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_message/models/user_model.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
+import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
@@ -44,6 +45,7 @@ class MessagesScreen extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18.0),
                       child: ListTile(
+                        onTap: () => Navigator.pushNamed(context, PAGE_CHAT),
                         leading: Image.asset(
                           users[index]?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
                         ),

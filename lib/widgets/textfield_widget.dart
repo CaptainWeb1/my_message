@@ -7,12 +7,15 @@ class TextFieldWidget extends StatelessWidget {
 
   final String hintText;
   final IconWidget? iconData;
+  final TextStyle textStyle;
 
-  const TextFieldWidget({
+  TextFieldWidget({
     Key? key,
     required this.hintText,
     this.iconData,
-  }) : super(key: key);
+    TextStyle? textStyle,
+  }) :  this.textStyle = textStyle ?? MyTextStyles.buttonPlaceHolder,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
             fillColor: MyColors.containerColor,
             hintText: hintText,
-            hintStyle: MyTextStyles.buttonPlaceHolder,
+            hintStyle: textStyle,
             contentPadding: EdgeInsets.symmetric(horizontal: 30),
             border: InputBorder.none,
             suffixIcon: Padding(
