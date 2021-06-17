@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
@@ -8,6 +9,9 @@ import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignInScreen extends StatelessWidget {
+
+
+
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -42,7 +46,9 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     TextFieldWidget(hintText: Strings.email,),
                     TextFieldWidget(hintText: Strings.password,),
-                    ButtonWidget(buttonText: Strings.signIn, onPressed: () => Navigator.pushNamed(context, PAGE_MESSAGES),),
+                    ButtonWidget(buttonText: Strings.signIn, onPressed: () {
+                      AuthenticationProvider().signIn(email: "email@email.com", password: "password", context: context);
+                    },),
                   ],
                 ),
               ),
