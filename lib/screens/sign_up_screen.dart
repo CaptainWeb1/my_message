@@ -49,9 +49,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     TextFieldWidget(
-                      textFieldParameters: TextFieldParameters(
-                        hintText: Strings.name,
-                      ),
+                      textFieldParameters: NameTextFieldParameters(),
                     ),
                     Spacer(),
                     TextFieldWidget(

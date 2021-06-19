@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/widgets/icon_widget.dart';
@@ -43,7 +44,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       ),
       child: TextField(
         textAlignVertical: TextAlignVertical.center,
-        style: MyTextStyles.formPlaceHolder,
+        style: MyTextStyles.formPlaceHolder.copyWith(
+          color: Theme.of(context).primaryColor
+        ),
         decoration: InputDecoration(
           hintText: _textFieldParameters.hintText,
           hintStyle: _textFieldParameters.textStyle ?? MyTextStyles.formPlaceHolder,
@@ -62,23 +65,33 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         ),
         obscureText: _textFieldParameters.obscureText,
         autocorrect: _textFieldParameters.autoCorrect,
+        inputFormatters: _textFieldParameters.textInputFormatters,
       )
     );
   }
 
    void _revealObscureText() {
     setState(() {
-      if (_textFieldParameters.obscureText) {
-        _textFieldParameters.iconWidget = IconWidget(icon: Icons.visibility_off);
-      } else {
-        _textFieldParameters.iconWidget = IconWidget(icon: Icons.visibility);
-      }
       _textFieldParameters.obscureText = !_textFieldParameters.obscureText;
     });
   }
 }
 
+class NameTextFieldParameters extends TextFieldParameters {
 
+  final String? hintText;
+
+  NameTextFieldParameters({
+    this.hintText = Strings.name
+  }) : super(
+    hintText: hintText,
+    textInputFormatters: [
+      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z 0-9]"))
+    ],
+    keyboardType: TextInputType.name
+  );
+
+}
 
 class EmailTextFieldParameters extends TextFieldParameters {
 
@@ -86,7 +99,10 @@ class EmailTextFieldParameters extends TextFieldParameters {
 
   EmailTextFieldParameters({
     this.hintText = Strings.email
-  }) : super(hintText: hintText);
+  }) : super(
+    hintText: hintText,
+    keyboardType: TextInputType.emailAddress
+  );
 
 }
 
@@ -104,7 +120,7 @@ class PasswordTextFieldParameters extends TextFieldParameters {
       hintText: hintText,
       obscureText: true,
       autoCorrect: false,
-      iconWidget: iconWidget
+      iconWidget: iconWidget,
   );
 
 }
@@ -117,6 +133,8 @@ class TextFieldParameters {
   final TextStyle? textStyle;
   bool obscureText;
   final bool autoCorrect;
+  List<TextInputFormatter>? textInputFormatters;
+  TextInputType? keyboardType;
 
   TextFieldParameters({
     required this.hintText,
@@ -125,6 +143,8 @@ class TextFieldParameters {
     this.textStyle,
     this.obscureText = false,
     this.autoCorrect = true,
+    this.textInputFormatters,
+    this.keyboardType
   });
   
 }
