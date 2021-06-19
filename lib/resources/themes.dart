@@ -29,12 +29,12 @@ ThemeData theme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
         fillColor: MyColors.containerColor,
-        hintStyle: MyTextStyles.buttonPlaceHolder,
+        hintStyle: MyTextStyles.formPlaceHolder,
         contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
         border: InputBorder.none,
   ),
   textSelectionTheme: TextSelectionThemeData(
-    cursorColor: MyColors.primary
+    cursorColor: MyColors.primary,
   ),
   iconTheme: IconThemeData(
     color: MyColors.iconColors
@@ -64,7 +64,7 @@ class MyTextStyles {
     fontSize: 18,
     color: const Color(0xffc4c4c4),
   );
-  static const TextStyle buttonPlaceHolder = const TextStyle(
+  static const TextStyle formPlaceHolder = const TextStyle(
     fontFamily: 'Sana',
     fontSize: 21,
     color: const Color(0xff898989),

@@ -57,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                     TextFieldWidget(
                       textFieldParameters: TextFieldParameters(
                           hintText: Strings.dateSelect,
-                          iconData: IconWidget(icon: Icons.calendar_today)
+                          iconWidget: IconWidget(icon: Icons.calendar_today)
                       ),
                     ),
                     Spacer(),

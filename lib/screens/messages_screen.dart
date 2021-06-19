@@ -34,7 +34,7 @@ class MessagesScreen extends StatelessWidget {
               child: TextFieldWidget(
                 textFieldParameters: TextFieldParameters(
                       hintText: Strings.search,
-                      iconData: IconWidget(
+                      iconWidget: IconWidget(
                         icon: Icons.search,
                       )
                   ),
