@@ -10,8 +10,6 @@ import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignInScreen extends StatelessWidget {
 
-
-
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -44,8 +42,12 @@ class SignInScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFieldWidget(hintText: Strings.email,),
-                    TextFieldWidget(hintText: Strings.password,),
+                    TextFieldWidget(
+                        textFieldParameters: EmailTextFieldParameters(),
+                    ),
+                    TextFieldWidget(
+                      textFieldParameters: PasswordTextFieldParameters(),
+                    ),
                     ButtonWidget(buttonText: Strings.signIn, onPressed: () {
                       AuthenticationProvider().signIn(email: "email@email.com", password: "password", context: context);
                     },),

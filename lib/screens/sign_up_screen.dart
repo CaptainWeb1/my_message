@@ -14,6 +14,13 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController nameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
+    //enableSuggestions: false,
+    //autocorrect: false,
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -33,13 +40,26 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFieldWidget(hintText: Strings.email,),
+                    TextFieldWidget(
+                      textFieldParameters: EmailTextFieldParameters(),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.password,),
+                    TextFieldWidget(
+                      textFieldParameters: PasswordTextFieldParameters(),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.name,),
+                    TextFieldWidget(
+                      textFieldParameters: TextFieldParameters(
+                        hintText: Strings.name,
+                      ),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.dateSelect, iconData: IconWidget(icon: Icons.calendar_today)),
+                    TextFieldWidget(
+                      textFieldParameters: TextFieldParameters(
+                          hintText: Strings.dateSelect,
+                          iconData: IconWidget(icon: Icons.calendar_today)
+                      ),
+                    ),
                     Spacer(),
                     ButtonWidget(
                       buttonText: Strings.signUp,

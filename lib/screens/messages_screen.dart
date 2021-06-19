@@ -32,10 +32,12 @@ class MessagesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFieldWidget(
-                hintText: Strings.search,
-                iconData: IconWidget(
-                icon: Icons.search,
-              ),
+                textFieldParameters: TextFieldParameters(
+                      hintText: Strings.search,
+                      iconData: IconWidget(
+                        icon: Icons.search,
+                      )
+                  ),
               ),
             ),
             Expanded(

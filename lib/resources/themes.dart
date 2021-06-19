@@ -24,8 +24,17 @@ ThemeData theme = ThemeData(
       textStyle: MyTextStyles.buttonText,
       shape: RoundedRectangleBorder(
         borderRadius: MyShapes.circularBorders
-      )
+      ),
     )
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+        fillColor: MyColors.containerColor,
+        hintStyle: MyTextStyles.buttonPlaceHolder,
+        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+        border: InputBorder.none,
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: MyColors.primary
   ),
   iconTheme: IconThemeData(
     color: MyColors.iconColors

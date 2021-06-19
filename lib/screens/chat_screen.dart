@@ -74,10 +74,12 @@ class ChatScreen extends StatelessWidget {
                 Spacer(),
                 Expanded(
                     child: TextFieldWidget(
-                        hintText: Strings.tapMessage,
-                        iconData: IconWidget(icon: Icons.camera_alt_rounded),
-                        textStyle: MyTextStyles.buttonPlaceHolder.copyWith(
-                          fontSize: 17
+                        textFieldParameters: TextFieldParameters(
+                          hintText: Strings.tapMessage,
+                          iconData: IconWidget(icon: Icons.camera_alt_rounded),
+                          textStyle: MyTextStyles.buttonPlaceHolder.copyWith(
+                              fontSize: 17
+                          ),
                         ),
                   ),
                   flex: 18,
