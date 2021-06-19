@@ -7,7 +7,8 @@ import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+
+  ChatScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

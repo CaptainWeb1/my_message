@@ -10,17 +10,13 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
+
+  SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    TextEditingController nameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
-    //enableSuggestions: false,
-    //autocorrect: false,
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -37,33 +33,42 @@ class SignUpScreen extends StatelessWidget {
               Spacer(),
               Expanded(
                 flex: 15,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextFieldWidget(
-                      textFieldParameters: EmailTextFieldParameters(),
-                    ),
-                    Spacer(),
-                    TextFieldWidget(
-                      textFieldParameters: PasswordTextFieldParameters(),
-                    ),
-                    Spacer(),
-                    TextFieldWidget(
-                      textFieldParameters: NameTextFieldParameters(),
-                    ),
-                    Spacer(),
-                    TextFieldWidget(
-                      textFieldParameters: TextFieldParameters(
-                          hintText: Strings.dateSelect,
-                          iconWidget: IconWidget(icon: Icons.calendar_today)
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextFieldWidget(
+                        textFieldParameters: EmailTextFieldParameters(),
                       ),
-                    ),
-                    Spacer(),
-                    ButtonWidget(
-                      buttonText: Strings.signUp,
-                      onPressed: () => print("s'inscrire"),
-                    ),
-                  ],
+                      Spacer(),
+                      TextFieldWidget(
+                        textFieldParameters: PasswordTextFieldParameters(),
+                      ),
+                      Spacer(),
+                      TextFieldWidget(
+                        textFieldParameters: NameTextFieldParameters(),
+                      ),
+                      Spacer(),
+                      TextFieldWidget(
+                        textFieldParameters: TextFieldParameters(
+                            hintText: Strings.dateSelect,
+                            iconWidget: IconWidget(icon: Icons.calendar_today)
+                        ),
+                      ),
+                      Spacer(),
+                      ButtonWidget(
+                        buttonText: Strings.signUp,
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()) {
+                            print("s'inscrire");
+                          } else {
+                            print("invalide");
+                          }
+                        }
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 25,),

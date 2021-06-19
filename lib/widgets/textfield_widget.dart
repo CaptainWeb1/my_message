@@ -33,40 +33,36 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: MyShapes.circularBorders,
-        color: MyColors.containerColor,
+    return TextFormField(
+      textAlignVertical: TextAlignVertical.center,
+      style: MyTextStyles.formPlaceHolder.copyWith(
+        color: Theme.of(context).primaryColor
       ),
-      constraints: BoxConstraints(
-        minHeight: MySizes.minimumHeightInputs
-      ),
-      child: TextField(
-        textAlignVertical: TextAlignVertical.center,
-        style: MyTextStyles.formPlaceHolder.copyWith(
-          color: Theme.of(context).primaryColor
-        ),
-        decoration: InputDecoration(
-          hintText: _textFieldParameters.hintText,
-          hintStyle: _textFieldParameters.textStyle ?? MyTextStyles.formPlaceHolder,
-          suffixIcon: GestureDetector(
-            onTap: _textFieldParameters.iconTap,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 23.0),
-              child:
-                (_textFieldParameters is PasswordTextFieldParameters)
-                  ? (_textFieldParameters.obscureText)
-                    ? IconWidget(icon: Icons.visibility)
-                    : IconWidget(icon: Icons.visibility_off)
-                  : _textFieldParameters.iconWidget
-            ),
+      decoration: InputDecoration(
+        hintText: _textFieldParameters.hintText,
+        hintStyle: _textFieldParameters.textStyle ?? MyTextStyles.formPlaceHolder,
+        suffixIcon: GestureDetector(
+          onTap: _textFieldParameters.iconTap,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 23.0),
+            child:
+              (_textFieldParameters is PasswordTextFieldParameters)
+                ? (_textFieldParameters.obscureText)
+                  ? IconWidget(icon: Icons.visibility)
+                  : IconWidget(icon: Icons.visibility_off)
+                : _textFieldParameters.iconWidget
           ),
         ),
-        obscureText: _textFieldParameters.obscureText,
-        autocorrect: _textFieldParameters.autoCorrect,
-        inputFormatters: _textFieldParameters.textInputFormatters,
-      )
+      ),
+      obscureText: _textFieldParameters.obscureText,
+      autocorrect: _textFieldParameters.autoCorrect,
+      inputFormatters: _textFieldParameters.textInputFormatters,
+      onFieldSubmitted: (String? value) {
+        _validateForm(value ?? "");
+      },
+      validator: (String? value) {
+        return _validateForm(value ?? "");
+      },
     );
   }
 
@@ -75,6 +71,17 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       _textFieldParameters.obscureText = !_textFieldParameters.obscureText;
     });
   }
+
+  _validateForm(String value) {
+    if(value == "" || value.replaceAll(" ", "") == "" ) {
+      return Strings.errorEmptyField;
+    } else {
+      if (_textFieldParameters is PasswordTextFieldParameters && value.length < 8) {
+        return Strings.errorPasswordLength;
+      }
+    }
+    return null;
+  }
 }
 
 class NameTextFieldParameters extends TextFieldParameters {
@@ -82,14 +89,15 @@ class NameTextFieldParameters extends TextFieldParameters {
   final String? hintText;
 
   NameTextFieldParameters({
-    this.hintText = Strings.name
+    this.hintText = Strings.name,
   }) : super(
     hintText: hintText,
     textInputFormatters: [
       FilteringTextInputFormatter.allow(RegExp("[a-z A-Z 0-9]"))
     ],
-    keyboardType: TextInputType.name
+    keyboardType: TextInputType.name,
   );
+
 
 }
 
@@ -101,7 +109,7 @@ class EmailTextFieldParameters extends TextFieldParameters {
     this.hintText = Strings.email
   }) : super(
     hintText: hintText,
-    keyboardType: TextInputType.emailAddress
+    keyboardType: TextInputType.emailAddress,
   );
 
 }
@@ -144,7 +152,8 @@ class TextFieldParameters {
     this.obscureText = false,
     this.autoCorrect = true,
     this.textInputFormatters,
-    this.keyboardType
+    this.keyboardType,
   });
+
   
 }

@@ -10,7 +10,9 @@ import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignInScreen extends StatelessWidget {
 
-  const SignInScreen({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+
+  SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +41,32 @@ class SignInScreen extends StatelessWidget {
               Spacer(),
               Expanded(
                 flex: 6,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextFieldWidget(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextFieldWidget(
                         textFieldParameters: EmailTextFieldParameters(),
-                    ),
-                    TextFieldWidget(
-                      textFieldParameters: PasswordTextFieldParameters(),
-                    ),
-                    ButtonWidget(buttonText: Strings.signIn, onPressed: () {
-                      AuthenticationProvider().signIn(email: "email@email.com", password: "password", context: context);
-                    },),
-                  ],
+                      ),
+                      TextFieldWidget(
+                        textFieldParameters: PasswordTextFieldParameters(),
+                      ),
+                      ButtonWidget(
+                        buttonText: Strings.signIn,
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()) {
+                            AuthenticationProvider().signIn(
+                                email: "email@email.com",
+                                password: "password",
+                                context: context
+                            );
+                          } else {
+                            print("invalide");
+                          }
+                      },),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 25,),

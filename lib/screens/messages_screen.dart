@@ -7,7 +7,8 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class MessagesScreen extends StatelessWidget {
-  const MessagesScreen({Key? key}) : super(key: key);
+
+  MessagesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

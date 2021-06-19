@@ -25,6 +25,10 @@ class Strings {
   //Erreurs
   static const String errorFirebaseInit = "erreur d'initialisation firebase";
 
+  //Form
+  static const String errorEmptyField = "Le champs de formulaire ne peut pas être vide";
+  static const String errorPasswordLength = "Le mot de passe doit faire au moins 8 caractères";
+
 }
 
 class ImagesPaths {

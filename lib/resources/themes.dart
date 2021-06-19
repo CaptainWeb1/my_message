@@ -29,9 +29,14 @@ ThemeData theme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
         fillColor: MyColors.containerColor,
+        filled: true,
         hintStyle: MyTextStyles.formPlaceHolder,
-        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
-        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 17),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            MyShapes.radiusCircular,
+          ),
+        ),
   ),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: MyColors.primary,
