@@ -6,9 +6,17 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
 
   ChatScreen({Key? key}) : super(key: key);
+
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+
+  String _message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +90,9 @@ class ChatScreen extends StatelessWidget {
                               fontSize: 17
                           ),
                         ),
+                      valueChanged: (value) {
+                        _message = value;
+                      },
                   ),
                   flex: 18,
                 ),

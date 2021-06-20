@@ -9,11 +9,21 @@ import 'package:my_message/widgets/checkbox_widget.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
 
-  final _formKey = GlobalKey<FormState>();
 
   SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String _email = "";
+  String _password = "";
+  String _name = "";
+  String _birthDate = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +50,23 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       TextFieldWidget(
                         textFieldParameters: EmailTextFieldParameters(),
+                        valueChanged: (value) {
+                          _email = value;
+                        },
                       ),
                       Spacer(),
                       TextFieldWidget(
                         textFieldParameters: PasswordTextFieldParameters(),
+                        valueChanged: (value) {
+                          _password = value;
+                        },
                       ),
                       Spacer(),
                       TextFieldWidget(
                         textFieldParameters: NameTextFieldParameters(),
+                        valueChanged: (value) {
+                          _name = value;
+                        },
                       ),
                       Spacer(),
                       TextFieldWidget(
@@ -55,6 +74,9 @@ class SignUpScreen extends StatelessWidget {
                             hintText: Strings.dateSelect,
                             iconWidget: IconWidget(icon: Icons.calendar_today)
                         ),
+                        valueChanged: (value) {
+                          _birthDate = value;
+                        },
                       ),
                       Spacer(),
                       ButtonWidget(

@@ -8,10 +8,12 @@ import 'package:my_message/widgets/icon_widget.dart';
 class TextFieldWidget extends StatefulWidget {
 
   final TextFieldParameters textFieldParameters;
+  final ValueChanged<String> valueChanged;
 
   TextFieldWidget({
     Key? key,
     required this.textFieldParameters,
+    required this.valueChanged,
   }) : super(key: key);
 
   @override
@@ -80,6 +82,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         return Strings.errorPasswordLength;
       }
     }
+    widget.valueChanged(value);
     return null;
   }
 }

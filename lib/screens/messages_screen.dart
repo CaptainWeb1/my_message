@@ -6,9 +6,17 @@ import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class MessagesScreen extends StatelessWidget {
+class MessagesScreen extends StatefulWidget {
 
   MessagesScreen({Key? key}) : super(key: key);
+
+  @override
+  _MessagesScreenState createState() => _MessagesScreenState();
+}
+
+class _MessagesScreenState extends State<MessagesScreen> {
+
+  String _searchText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +47,9 @@ class MessagesScreen extends StatelessWidget {
                         icon: Icons.search,
                       )
                   ),
+                valueChanged: (value) {
+                  _searchText = value;
+                },
               ),
             ),
             Expanded(

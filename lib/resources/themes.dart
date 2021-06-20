@@ -32,6 +32,16 @@ ThemeData theme = ThemeData(
         filled: true,
         hintStyle: MyTextStyles.formPlaceHolder,
         contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 17),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.green,
+            style: BorderStyle.solid,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.all(
+            MyShapes.radiusCircular,
+          ),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
             MyShapes.radiusCircular,
