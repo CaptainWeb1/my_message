@@ -6,6 +6,7 @@ import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/screens/messages_screen.dart';
 import 'package:my_message/screens/sign_in_screen.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +54,10 @@ class MyApp extends StatelessWidget {
                   } else if (data is SignedOutState || data is InitAuthState) {
                     return SignInScreen();
                   } else if (data is ErrorAuthState) {
+                    NavigationUtils.showMyDialog(
+                        context: context,
+                        bodyText: data.message
+                    );
                     return Center(child: Text(data.message));
                   } else {// loading state
                     return const CircularProgressIndicator();

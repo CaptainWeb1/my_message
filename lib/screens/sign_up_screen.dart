@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
@@ -8,9 +9,9 @@ import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/checkbox_widget.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 
 class SignUpScreen extends StatefulWidget {
-
 
   SignUpScreen({Key? key}) : super(key: key);
 
@@ -83,9 +84,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         buttonText: Strings.signUp,
                         onPressed: () {
                           if(_formKey.currentState!.validate()) {
-                            print("s'inscrire");
+                            AuthenticationProvider().register(
+                                email: _email,
+                                password: _password,
+                                context: context
+                            );
                           } else {
-                            print("invalide");
+                            NavigationUtils.showMyDialog(context: context, bodyText: "Erreur d'inscription");
                           }
                         }
                       ),

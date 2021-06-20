@@ -28,6 +28,10 @@ class Strings {
   //Form
   static const String errorEmptyField = "Le champs de formulaire ne peut pas être vide";
   static const String errorPasswordLength = "Le mot de passe doit faire au moins 8 caractères";
+  static const String errorPasswordWeak = "Le mot de passe est trop faible";
+  static const String errorAccountAlreadyExists = "Le compte existe déjà avec cet email";
+  static const String errorNoUserForThisEmail = "Pas d'utilisateur trouvé pour cet email";
+  static const String errorWrongPassword = "Mauvais mot de passe";
 
 }
 

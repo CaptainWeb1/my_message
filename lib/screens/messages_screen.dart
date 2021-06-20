@@ -67,7 +67,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                users[index]?.userName ?? "pseudo",
+                              users[index]?.userName ?? "pseudo",
                               style: MyTextStyles.bodyLink,
                             ),
                             Text(

@@ -4,6 +4,7 @@ import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
@@ -76,7 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context: context
                             );
                           } else {
-                            print("invalide");
+                            NavigationUtils.showMyDialog(context: context, bodyText: "Erreur d'authentification");
                           }
                       },),
                     ],
