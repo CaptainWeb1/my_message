@@ -10,12 +10,13 @@ import 'package:my_message/utils/route_generator.dart';
 
 import 'authentication_state.dart';
 
-class AuthenticationProvider with ChangeNotifier {
+class AuthenticationProvider {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? get currentUser => _firebaseAuth.currentUser;
   AuthenticationState authDataModel = InitAuthState();
   StreamSubscription<User?>? userStateChangeSubscription;
+  bool isConnected = false;
 
   AuthenticationProvider() {
     userStateChangeSubscription = listenUserStateChange();
@@ -31,12 +32,7 @@ class AuthenticationProvider with ChangeNotifier {
       userIdTokenChange,
       userChange
     ]).listen((User? user) {
-      if(user == null) {
-        authDataModel = SignedOutState();
-      } else {
-        authDataModel = SignedInState();
-      }
-      notifyListeners();
+
     });
   }
 
@@ -67,7 +63,6 @@ class AuthenticationProvider with ChangeNotifier {
         authDataModel = ErrorAuthState(message: Strings.errorWrongPassword);
       }
     }
-    notifyListeners();
   }
 
   void signOut() async {
@@ -76,7 +71,6 @@ class AuthenticationProvider with ChangeNotifier {
     } catch(e){
       print(e.toString());
     }
-    notifyListeners();
   }
 
 }

@@ -11,7 +11,6 @@ import 'package:my_message/widgets/textfield_widget.dart';
 
 class SignInScreen extends StatefulWidget {
 
-
   SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -92,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Strings.noAccount
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, PAGE_SIGN_UP),
+                    onPressed: () => Navigator.of(context).pushNamed(PAGE_SIGN_UP),
                     style: TextButton.styleFrom(
                         padding: EdgeInsets.zero
                     ),

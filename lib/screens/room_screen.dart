@@ -6,15 +6,15 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class ChatScreen extends StatefulWidget {
+class RoomScreen extends StatefulWidget {
 
-  ChatScreen({Key? key}) : super(key: key);
+  RoomScreen({Key? key}) : super(key: key);
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _RoomScreenState createState() => _RoomScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _RoomScreenState extends State<RoomScreen> {
 
   String _message = "";
 

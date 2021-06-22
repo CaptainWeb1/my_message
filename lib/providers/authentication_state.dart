@@ -1,21 +1,21 @@
 
 abstract class AuthenticationState {}
 
-class SignedInState implements AuthenticationState {
+class SignedInState extends AuthenticationState {
   SignedInState();
 }
 
-class SignedOutState implements AuthenticationState {
+class SignedOutState extends AuthenticationState {
   SignedOutState();
 }
 
-class InitAuthState implements AuthenticationState {}
+class InitAuthState extends AuthenticationState {}
 
-class ErrorAuthState implements AuthenticationState {
-  ErrorAuthState({required this.message});
+class ErrorAuthState extends AuthenticationState {
   final String message;
+  ErrorAuthState({required this.message});
 }
 
-class LoadingAuthState implements AuthenticationState {
-  const LoadingAuthState();
+class LoadingAuthState extends AuthenticationState {
+  LoadingAuthState();
 }
