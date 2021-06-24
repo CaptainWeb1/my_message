@@ -2,6 +2,7 @@
 class Strings {
   //General
   static const String titleApp = "Chat App";
+  static const String ok = "OK";
 
   static const String email = "Email";
   static const String password = "Mot de passe";
@@ -22,16 +23,20 @@ class Strings {
   static const String search = "Recherchez...";
   static const String exampleDate = "13/05/21 - 18:50";
 
-  //Erreurs
+  //Errors
   static const String errorFirebaseInit = "erreur d'initialisation firebase";
 
-  //Form
+  //form erros
   static const String errorEmptyField = "Le champs de formulaire ne peut pas être vide";
   static const String errorPasswordLength = "Le mot de passe doit faire au moins 8 caractères";
   static const String errorPasswordWeak = "Le mot de passe est trop faible";
+
+  //Auth firebase errors
+  static const String errorAuthTitle = "Erreur d'authentification";
   static const String errorAccountAlreadyExists = "Le compte existe déjà avec cet email";
   static const String errorNoUserForThisEmail = "Pas d'utilisateur trouvé pour cet email";
-  static const String errorWrongPassword = "Mauvais mot de passe";
+  static const String errorWrongPassword = "Le mot de passe est erroné";
+  static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
 
 }
 

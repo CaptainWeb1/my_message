@@ -75,8 +75,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                 password: _password,
                                 context: context
                             );
-                          } else {
-                            NavigationUtils.showMyDialog(context: context, bodyText: "Erreur d'authentification");
                           }
                       },),
                     ],

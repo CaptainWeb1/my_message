@@ -10,7 +10,7 @@ import 'package:my_message/utils/route_generator.dart';
 
 import 'authentication_state.dart';
 
-class AuthenticationProvider {
+class AuthenticationProvider with ChangeNotifier {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? get currentUser => _firebaseAuth.currentUser;
@@ -58,9 +58,11 @@ class AuthenticationProvider {
       Navigator.pushNamed(context, PAGE_MESSAGES);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        authDataModel = ErrorAuthState(message: Strings.errorNoUserForThisEmail);
+        NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorNoUserForThisEmail);
       } else if (e.code == 'wrong-password') {
-        authDataModel = ErrorAuthState(message: Strings.errorWrongPassword);
+        NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorWrongPassword);
+      } else if (e.code == 'user-disabled') {
+        NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorUserDisabled);
       }
     }
   }
