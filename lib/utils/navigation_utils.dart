@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_message/resources/strings.dart';
+import 'package:my_message/widgets/progress_indicator_overlay_widget.dart';
 
 class NavigationUtils {
 
@@ -29,16 +30,27 @@ class NavigationUtils {
     );
   }
 
-  static void openLoadingDialog(BuildContext context) {
+  static void showLoadingDialog(BuildContext context) {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: CircularProgressIndicator(),
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
         );
       },
     );
+  }
+
+  static void hideDialog(BuildContext context) {
+    if(Navigator.of(context).canPop()){
+      Navigator.of(context).pop();
+    }
   }
 
 }

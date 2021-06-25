@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_message/providers/authentication_provider.dart';
@@ -6,6 +5,7 @@ import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/screens/messages_screen.dart';
 import 'package:my_message/screens/sign_in_screen.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasError) {
           showDialog(
               context: initFirebaseContext,
-              builder: (_){
+              builder: (_) {
                 return Dialog(
                   child: Text(Strings.errorFirebaseInit),
                 );
@@ -38,21 +38,32 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
             providers: [
-              StreamProvider<User?>(
-                create: (_) => AuthenticationProvider().userState,
-                initialData: null,
-                catchError: (_, error) => null,
-              ),
+              ChangeNotifierProvider(create: (contextProvider) => AuthenticationProvider())
             ],
             builder: (providerContext, widget) {
-              User? _user = Provider.of<User?>(providerContext);
               return MaterialApp(
                 title: 'My Message',
                 theme: theme,
                 onGenerateRoute: RouteGenerator.generateRoute,
-                home: _user == null
-                      ? SignInScreen()
-                      : MessagesScreen(),
+                home: StreamBuilder(
+                  stream: AuthenticationProvider().listenUserStateChange(),
+                  builder: (authStreamContext, snapshot) {
+                    if (snapshot.hasError) {
+                      NavigationUtils.showMyDialog(context: context, bodyText: snapshot.error.toString());
+                      return SignInScreen();
+                    } else {
+                      if(snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else {
+                        if(snapshot.data != null) {
+                          return MessagesScreen();
+                        } else {
+                          return SignInScreen();
+                        }
+                      }
+                    }
+                  },
+                ),
                 debugShowCheckedModeBanner: false,
               );
             },

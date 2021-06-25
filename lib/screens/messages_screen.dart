@@ -38,7 +38,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   IconButton(
-                    onPressed: () => AuthenticationProvider().signOut(),
+                    onPressed: () => AuthenticationProvider().signOut(context),
                     icon: IconWidget(
                       icon: Icons.power_settings_new_outlined,
                       size: 25,

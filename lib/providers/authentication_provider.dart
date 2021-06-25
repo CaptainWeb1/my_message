@@ -8,40 +8,33 @@ import 'package:my_message/resources/strings.dart';
 import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 
-import 'authentication_state.dart';
 
 class AuthenticationProvider with ChangeNotifier {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? get currentUser => _firebaseAuth.currentUser;
-  AuthenticationState authDataModel = InitAuthState();
-  StreamSubscription<User?>? userStateChangeSubscription;
-  bool isConnected = false;
-
-  AuthenticationProvider() {
-    userStateChangeSubscription = listenUserStateChange();
-  }
 
   Stream<User?> get userState => _firebaseAuth.authStateChanges();
   Stream<User?> get userIdTokenChange => _firebaseAuth.idTokenChanges();
   Stream<User?> get userChange => _firebaseAuth.userChanges();
 
-  StreamSubscription<User?> listenUserStateChange() {
+  Stream<User?> listenUserStateChange() {
     return StreamGroup.merge([
       userState,
       userIdTokenChange,
       userChange
-    ]).listen((User? user) {
-
-    });
+    ]);
   }
 
   void register({required String email, required String password, required BuildContext context}) async {
+    NavigationUtils.showLoadingDialog(context);
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      NavigationUtils.showMyDialog(context: context, bodyText: "L'inscription est un succès");
-      Navigator.of(context).pop();
+      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
+        NavigationUtils.hideDialog(context);
+        NavigationUtils.showMyDialog(context: context, bodyText: Strings.successRegister);
+      });
     } on FirebaseAuthException catch (e) {
+      NavigationUtils.hideDialog(context);
       if (e.code == 'weak-password') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorPasswordWeak);
       } else if (e.code == 'email-already-in-use') {
@@ -53,10 +46,14 @@ class AuthenticationProvider with ChangeNotifier {
   }
 
   void signIn({required String email, required String password, required BuildContext context}) async {
+    NavigationUtils.showLoadingDialog(context);
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushNamed(context, PAGE_MESSAGES);
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value) {
+        NavigationUtils.hideDialog(context);
+        Navigator.pushNamed(context, PAGE_MESSAGES);
+      });
     } on FirebaseAuthException catch (e) {
+      NavigationUtils.hideDialog(context);
       if (e.code == 'user-not-found') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorNoUserForThisEmail);
       } else if (e.code == 'wrong-password') {
@@ -67,11 +64,17 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  void signOut() async {
+  void signOut(BuildContext context) async {
+    NavigationUtils.showLoadingDialog(context);
     try {
-      await _firebaseAuth.signOut();
+      await _firebaseAuth.signOut().then((value) {
+        NavigationUtils.hideDialog(context);
+        Navigator.pushNamed(context, PAGE_SIGN_IN);
+      });
     } catch(e){
-      print(e.toString());
+      NavigationUtils.hideDialog(context);
+      NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorLogOut);
+      print("erreur log out : $e");
     }
   }
 

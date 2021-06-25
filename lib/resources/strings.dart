@@ -17,6 +17,8 @@ class Strings {
   static const String signUpTitle = "Inscription";
   static const String signIn = "Se connecter";
   static const String acceptConditions = "J’accepte les conditions d’utilisation";
+  static const String successRegister = "L'inscription est un succès";
+
 
   //Messages
   static const String tapMessage = "Tapez votre message…";
@@ -37,6 +39,7 @@ class Strings {
   static const String errorNoUserForThisEmail = "Pas d'utilisateur trouvé pour cet email";
   static const String errorWrongPassword = "Le mot de passe est erroné";
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
+  static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
 
 }
 
