@@ -13,33 +13,33 @@ class UserModel {
     );
 }
 
-Map<int, UserModel> users = {
-   0 : UserModel(
+List<UserModel> users = [
+   UserModel(
     uniqueKey: UniqueKey(),
     userName: "Jean-Michel",
     imagePath: "assets/images/user_images/Jean-Michel.png"
   ),
-  1 : UserModel(
+  UserModel(
       uniqueKey: UniqueKey(),
       userName: "Micheline",
       imagePath: "assets/images/user_images/Micheline.png"
   ),
-  2 : UserModel(
+  UserModel(
       uniqueKey: UniqueKey(),
       userName: "Brigitte Bardot",
       imagePath: "assets/images/user_images/Brigitte Bardot.png"
   ),
-  3 : UserModel(
+  UserModel(
       uniqueKey: UniqueKey(),
       userName: "Nekfeu",
       imagePath: "assets/images/user_images/Nekfeu.png"
   ),
-  4 : UserModel(
+  UserModel(
       uniqueKey: UniqueKey(),
       userName: "Inconnu",
       imagePath: "assets/images/user_images/Inconnu.png"
   )
-};
+];
 
 
 /*

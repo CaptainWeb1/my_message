@@ -59,6 +59,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       obscureText: _textFieldParameters.obscureText,
       autocorrect: _textFieldParameters.autoCorrect,
       inputFormatters: _textFieldParameters.textInputFormatters,
+      onChanged: (String? value) {
+        _validateForm(value ?? "");
+      },
       onFieldSubmitted: (String? value) {
         _validateForm(value ?? "");
       },
@@ -75,11 +78,13 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   }
 
   _validateForm(String value) {
-    if(value == "" || value.replaceAll(" ", "") == "" ) {
-      return Strings.errorEmptyField;
-    } else {
-      if (_textFieldParameters is PasswordTextFieldParameters && value.length < 8) {
-        return Strings.errorPasswordLength;
+    if(_textFieldParameters is !SearchTextFieldParameters) {
+      if(value == "" || value.replaceAll(" ", "") == "") {
+        return Strings.errorEmptyField;
+      } else {
+        if (_textFieldParameters is PasswordTextFieldParameters && value.length < 8) {
+          return Strings.errorPasswordLength;
+        }
       }
     }
     widget.valueChanged(value);
@@ -100,7 +105,6 @@ class NameTextFieldParameters extends TextFieldParameters {
     ],
     keyboardType: TextInputType.name,
   );
-
 
 }
 
@@ -132,6 +136,23 @@ class PasswordTextFieldParameters extends TextFieldParameters {
       obscureText: true,
       autoCorrect: false,
       iconWidget: iconWidget,
+  );
+
+}
+
+class SearchTextFieldParameters extends TextFieldParameters {
+
+  final String? hintText;
+  final IconWidget? iconWidget;
+
+  SearchTextFieldParameters({
+    this.hintText = Strings.search,
+    this.iconWidget = const IconWidget(
+      icon: Icons.search,
+    ),
+  }) : super(
+    hintText: hintText,
+    iconWidget: iconWidget
   );
 
 }

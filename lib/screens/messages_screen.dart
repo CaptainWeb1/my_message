@@ -19,6 +19,31 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   String _searchText = "";
 
+  List<UserModel> _usersFiltered = [];
+
+  void _filterMessages() {
+    List<UserModel> _usersToFilter = [];
+    setState(() {
+      if (_searchText == "") {
+          _usersFiltered = List.from(users);
+      } else {
+        for (var user in users) {
+          String _username = user.userName ?? "";
+          if (_username.toLowerCase().contains(_searchText.toLowerCase())) {
+            _usersToFilter.add(user);
+          }
+        }
+        _usersFiltered = List.from(_usersToFilter);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _usersFiltered = List.from(users);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +76,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFieldWidget(
-                textFieldParameters: TextFieldParameters(
-                      hintText: Strings.search,
-                      iconWidget: IconWidget(
-                        icon: Icons.search,
-                      )
-                  ),
+                textFieldParameters: SearchTextFieldParameters(),
                 valueChanged: (value) {
                   _searchText = value;
+                  _filterMessages();
                 },
               ),
             ),
@@ -68,38 +89,64 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 18.0),
-                      child: ListTile(
-                        onTap: () => Navigator.of(context).pushNamed(PAGE_CHAT),
-                        leading: Image.asset(
-                          users[index]?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
-                        ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              users[index]?.userName ?? "pseudo",
-                              style: MyTextStyles.bodyLink,
-                            ),
-                            Text(
-                                "Ceci est un message",
-                              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                fontSize: 16
-                              ),
-                            ),
-                          ],
-                        ),
-                        trailing: Text(
-                          Strings.exampleDate,
-                          style: MyTextStyles.dateMessagesScreen,
-                        ),
+                      child: MessageTileWidget(
+                          key: UniqueKey(),
+                          usersFiltered: _usersFiltered,
+                          index: index,
                       ),
                     );
                   },
-                  itemCount: users.length,
+                  itemCount: _usersFiltered.length,
               ),
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed(PAGE_SEARCH),
+        child: Icon(
+          Icons.create,
+        )
+      ),
+    );
+  }
+}
+
+class MessageTileWidget extends StatelessWidget {
+  const MessageTileWidget({
+    Key? key,
+    required usersFiltered,
+    required this.index,
+  }) : _usersFiltered = usersFiltered, super(key: key);
+
+  final _usersFiltered;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => Navigator.of(context).pushNamed(PAGE_CHAT),
+      leading: Image.asset(
+          _usersFiltered[index]?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _usersFiltered[index]?.userName ?? "pseudo",
+            style: MyTextStyles.bodyLink,
+          ),
+          Text(
+              "Ceci est un message",
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              fontSize: 16
+            ),
+          ),
+        ],
+      ),
+      trailing: Text(
+        Strings.exampleDate,
+        style: MyTextStyles.dateMessagesScreen,
       ),
     );
   }

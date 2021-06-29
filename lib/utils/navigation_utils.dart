@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_message/resources/strings.dart';
-import 'package:my_message/widgets/progress_indicator_overlay_widget.dart';
 
 class NavigationUtils {
 

@@ -1,23 +1,40 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_message/models/message_model.dart';
+import 'package:my_message/models/room_model.dart';
 
 class ChatProvider {
 
-  Stream<DocumentSnapshot> getMoney() {
-    return FirebaseFirestore.instance.collection('money').doc('qR0EUHpQlxYoozuttNus').snapshots();
+  User? get currentUser => FirebaseAuth.instance.currentUser;
+
+  void setRoomMessages({required String peerId}) {
+    RoomModel _room = RoomModel(
+      currentUserId: FirebaseAuth.instance.currentUser?.uid ?? "no_user",
+      peerUserId: peerId
+    );
+    FirebaseFirestore.instance.collection('rooms').add(
+      RoomModel.toMap(_room)
+    );
   }
 
-  /*Stream<DocumentSnapshot> getRoomMessages() {
-    return Firestore.instance
-        .collection('messages')
-        .where('users', arrayContains: userId)
+  Stream<QuerySnapshot<dynamic>> getRoomMessages({required String peerId}) {
+    return FirebaseFirestore.instance
+        .collection('rooms')
+        .where('users', arrayContains: peerId)
+        .where('users', arrayContains: FirebaseAuth.instance.currentUser?.uid)
         .snapshots();
   }
 
-  String getConversationID(String userID, String peerID) {
-    return userID.hashCode <= peerID.hashCode
-        ? userID + '_' + peerID
-        : peerID + '_' + userID;
-  }*/
+  void setMessage({required String peerId, required String message}) {
+    MessageModel _messageModel = MessageModel(
+        textMessage: message,
+        timeMessage: DateTime.now(),
+        userId: FirebaseAuth.instance.currentUser?.uid ?? "no_user"
+    );
+    FirebaseFirestore.instance
+        .collection('rooms')
+        .add(MessageModel.toMap(_messageModel));
+  }
 
 }
