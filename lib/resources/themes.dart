@@ -67,6 +67,7 @@ class MyColors {
   static const Color containerColor = const Color(0xff474747);
   static const Color bodyText = const Color(0xffc4c4c4);
   static const Color iconColors = const Color(0xff808080);
+  static const Color hintColor = const Color(0xff898989);
 }
 
 class MyTextStyles {
@@ -85,7 +86,7 @@ class MyTextStyles {
   static const TextStyle formPlaceHolder = const TextStyle(
     fontFamily: 'Sana',
     fontSize: 21,
-    color: const Color(0xff898989),
+    color: MyColors.hintColor,
     shadows: [
       Shadow(
         color: const Color(0x29000000),

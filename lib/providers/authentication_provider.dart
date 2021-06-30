@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
@@ -29,10 +30,21 @@ class AuthenticationProvider with ChangeNotifier {
   void register({required String email, required String password, required BuildContext context}) async {
     NavigationUtils.showLoadingDialog(context);
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
-        NavigationUtils.hideDialog(context);
-        NavigationUtils.showMyDialog(context: context, bodyText: Strings.successRegister);
-      });
+      UserCredential _userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      User? _user = _userCredential.user;
+      await FirebaseFirestore.instance.collection('users').doc(_user?.uid).set(
+          {'firstName': _user?.displayName,
+           'photoURL': _user?.photoURL,}
+           );
+      NavigationUtils.hideDialog(context);
+      NavigationUtils.showMyDialog(
+          context: context, 
+          bodyText: Strings.successRegister, 
+          click: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            PAGE_SIGN_IN,
+            ModalRoute.withName(PAGE_SIGN_IN),
+          ));
     } on FirebaseAuthException catch (e) {
       NavigationUtils.hideDialog(context);
       if (e.code == 'weak-password') {

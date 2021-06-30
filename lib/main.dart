@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
@@ -19,6 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return FutureBuilder(
       // Initialize FlutterFire:
       future: Firebase.initializeApp(),

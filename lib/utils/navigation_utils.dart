@@ -6,7 +6,8 @@ class NavigationUtils {
 
   static void showMyDialog({
     required BuildContext context,
-    required String bodyText
+    required String bodyText,
+    VoidCallback? click
   }) {
     showDialog(
       context: context,
@@ -16,7 +17,7 @@ class NavigationUtils {
           actions: [
            Center(
              child: ElevatedButton(
-                 onPressed: () => Navigator.of(context).pop(),
+                 onPressed: click ?? () => Navigator.of(context).pop(),
                  child: Text(
                      Strings.ok,
                     textAlign: TextAlign.center,
