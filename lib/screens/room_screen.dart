@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/widgets/icon_widget.dart';
@@ -20,6 +21,7 @@ class _RoomScreenState extends State<RoomScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationProvider().reloadFirebase(context: context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 65,

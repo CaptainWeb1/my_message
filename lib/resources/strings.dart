@@ -29,7 +29,8 @@ class Strings {
   static const String exampleDate = "13/05/21 - 18:50";
 
   //Errors
-  static const String errorFirebaseInit = "erreur d'initialisation firebase";
+  static const String errorFirebaseInit = "Erreur d'initialisation firebase";
+  static const String errorUserNotFound = "L'utilisateur est introuvable";
 
   //Form errors
   static const String errorEmptyField = "Le champs de formulaire ne peut pas être vide";
@@ -37,13 +38,22 @@ class Strings {
   static const String errorPasswordWeak = "Le mot de passe est trop faible";
 
   //Auth firebase errors
-  static const String errorAuthTitle = "Erreur d'authentification";
+  static const String errorAuthSignIn = "Erreur d'authentification";
+  static const String errorAuthSignUp = "Erreur d'inscription";
   static const String errorAccountAlreadyExists = "Le compte existe déjà avec cet email";
   static const String errorNoUserForThisEmail = "Pas d'utilisateur trouvé pour cet email";
   static const String errorWrongPassword = "Le mot de passe est erroné";
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
 
+  //Firebase Queries & Models
+  static const String usersCollection = "users";
+  static const String userModelId = "uuid";
+  static const String userModelName = "userName";
+  static const String userModelImagePath = "imagePath";
+  static const String messageModelTextMessage = "textMessage";
+  static const String messageModelTimestamp = "timestamp";
+  static const String messageModelUserId = "userId";
 }
 
 class ImagesPaths {

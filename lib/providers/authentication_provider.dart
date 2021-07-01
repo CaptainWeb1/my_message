@@ -27,20 +27,27 @@ class AuthenticationProvider with ChangeNotifier {
     ]);
   }
 
-  void register({required String email, required String password, required BuildContext context}) async {
+  void register(
+      {required String email,
+        required String password,
+        required String userName,
+        required BuildContext context}) async {
     NavigationUtils.showLoadingDialog(context);
     try {
       UserCredential _userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User? _user = _userCredential.user;
-      await FirebaseFirestore.instance.collection('users').doc(_user?.uid).set(
-          {'firstName': _user?.displayName,
-           'photoURL': _user?.photoURL,}
+      await FirebaseFirestore.instance.collection(Strings.usersCollection).doc(_user?.uid).set(
+          {
+           Strings.messageModelUserId: _user?.uid,
+           Strings.userModelName: userName,
+           Strings.userModelImagePath: _user?.photoURL
+          }
            );
       NavigationUtils.hideDialog(context);
       NavigationUtils.showMyDialog(
           context: context, 
           bodyText: Strings.successRegister, 
-          click: () => Navigator.pushNamedAndRemoveUntil(
+          onClick: () => Navigator.pushNamedAndRemoveUntil(
             context,
             PAGE_SIGN_IN,
             ModalRoute.withName(PAGE_SIGN_IN),
@@ -88,6 +95,29 @@ class AuthenticationProvider with ChangeNotifier {
       NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorLogOut);
       print("erreur log out : $e");
     }
+  }
+
+  void reloadFirebase({required BuildContext context}) async {
+    try {
+      await FirebaseAuth.instance.currentUser?.reload();
+      User? _user = currentUser;
+      if(_user == null) {
+        showDisconnectDialog(context: context);
+      }
+
+    }  on FirebaseAuthException catch (e) {
+      if (e.code == 'user-disabled') {
+        showDisconnectDialog(context: context);
+      }
+    }
+  }
+
+  void showDisconnectDialog({required BuildContext context}) {
+    NavigationUtils.showMyDialog(
+        context: context,
+        bodyText: Strings.errorUserNotFound,
+        onClick: () => signOut(context)
+    );
   }
 
 }

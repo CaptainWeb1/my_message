@@ -23,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
-  String _name = "";
+  String _userName = "";
   String _birthDate = "";
 
   @override
@@ -66,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFieldWidget(
                         textFieldParameters: NameTextFieldParameters(),
                         valueChanged: (value) {
-                          _name = value;
+                          _userName = value;
                         },
                       ),
                       Spacer(),
@@ -87,10 +87,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             AuthenticationProvider().register(
                                 email: _email,
                                 password: _password,
+                                userName: _userName,
                                 context: context
                             );
                           } else {
-                            NavigationUtils.showMyDialog(context: context, bodyText: "Erreur d'inscription");
+                            NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorAuthSignUp);
                           }
                         }
                       ),
