@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_message/resources/strings.dart';
 
 class UserModel {
@@ -25,6 +28,18 @@ class UserModel {
     Strings.userModelName: userModel.userName,
     Strings.userModelImagePath: userModel.imagePath,
   };
+
+  static String encodeUsers(List<UserModel?> users) {
+    return json.encode(
+      users.map((user) => UserModel.toMap(user!)).toList()
+    );
+  }
+
+  static List<UserModel?> decodeUsers(List<QueryDocumentSnapshot<dynamic>> queryUsers) {
+    return queryUsers.map(
+      (e) => UserModel.fromJson(e.data())
+    ).toList();
+  }
 }
 
 List<UserModel> users = [

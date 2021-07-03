@@ -51,6 +51,7 @@ class Strings {
   static const String userModelId = "uuid";
   static const String userModelName = "userName";
   static const String userModelImagePath = "imagePath";
+  static const String roomsCollection = "rooms";
   static const String messageModelTextMessage = "textMessage";
   static const String messageModelTimestamp = "timestamp";
   static const String messageModelUserId = "userId";
