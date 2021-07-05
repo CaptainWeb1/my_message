@@ -1,15 +1,23 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_message/models/message_model.dart';
+import 'package:my_message/models/user_model.dart';
 import 'package:my_message/providers/authentication_provider.dart';
+import 'package:my_message/providers/chat_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
+import 'package:my_message/widgets/circular_progress_indicator_widget.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
+import 'package:my_message/utils/format_util.dart';
 
 class RoomScreen extends StatefulWidget {
 
-  RoomScreen({Key? key}) : super(key: key);
+  final dynamic peerUserArgument;
+
+  RoomScreen({Key? key, required this.peerUserArgument}) : super(key: key);
 
   @override
   _RoomScreenState createState() => _RoomScreenState();
@@ -18,10 +26,12 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
 
   String _message = "";
+  UserModel? _peerUser;
 
   @override
   Widget build(BuildContext context) {
     AuthenticationProvider().reloadFirebase(context: context);
+    _peerUser = widget.peerUserArgument;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 65,
@@ -33,7 +43,7 @@ class _RoomScreenState extends State<RoomScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-            "Jean-Michel",
+            _peerUser?.userName ?? "pseudo",
           style: Theme.of(context).textTheme.bodyText1?.copyWith(
             color: Colors.white,
             fontSize: 22,
@@ -50,34 +60,69 @@ class _RoomScreenState extends State<RoomScreen> {
       ),
       body: Column(
         children: [
-          Expanded(
-            flex: 8,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-              child: ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 40.0),
-                      child: Column(
-                        crossAxisAlignment: (index == 0) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-                        children: [
-                          MessageContainerWidget(
-                            isCurrentUser: (index == 0) ? true : false,
+          StreamBuilder<QuerySnapshot<dynamic>>(
+            stream: ChatProvider.getRoomMessages(peerId: _peerUser?.userId ?? "no_user"),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting) {
+                return Expanded(
+                    flex: 8,
+                    child: CircularProgressIndicatorWidget()
+                );
+              } else {
+                if (snapshot.hasData) {
+                  List<QueryDocumentSnapshot<dynamic>> _docs = snapshot.data!.docs;
+                  List<MessageModel?> _messageModels = MessageModel.decodeMessages(_docs);
+                    return Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
+                        child: (_messageModels.length > 0)
+                          ? ListView.builder(
+                            itemCount: _messageModels.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 40.0),
+                                child: Column(
+                                  crossAxisAlignment: (index == 0) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                                  children: [
+                                    if(_messageModels[index]?.textMessage != null)
+                                    MessageContainerWidget(
+                                      isCurrentUser: (index == 0) ? true : false,
+                                      text: _messageModels[index]?.textMessage ?? "",
+                                    ),
+                                    if(_messageModels[index]?.timeMessage != null)
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      child: Text(
+                                        _messageModels[index]?.timeMessage.parseDateToString() ?? "",
+                                        style: MyTextStyles.dateChatScreen,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }
+                        ) : Center(
+                          child: Text(
+                            Strings.noMessages,
+                            textAlign: TextAlign.center,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                                Strings.exampleDate,
-                                style: MyTextStyles.dateChatScreen,
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     );
-                  }
-              ),
-            ),
+                } else {
+                  return Expanded(
+                    flex: 8,
+                    child: Center(
+                      child: Text(
+                          snapshot.error as String,
+                          textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
+              }
+            }
           ),
           Expanded(
             child: Row(

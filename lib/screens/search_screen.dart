@@ -83,8 +83,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   itemBuilder: (context, index) {
                                     return ListTile(
                                       onTap: () => Navigator.of(context).pushNamed(
-                                        PAGE_CHAT,
-                                        arguments: _userModels[index]?.uuid
+                                        PAGE_ROOM,
+                                        arguments: _userModels[index]
                                       ),
                                       leading: SizedBox(
                                         child: Image.asset(

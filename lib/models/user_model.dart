@@ -5,26 +5,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_message/resources/strings.dart';
 
 class UserModel {
-  final String? uuid;
+  final String? userId;
   final String? userName;
   final String? imagePath;
 
   UserModel({
-    required this.uuid,
+    required this.userId,
     required this.userName,
     required this.imagePath}
     );
 
   factory UserModel.fromJson(Map<String, dynamic> jsonData) {
     return UserModel(
-      uuid: jsonData[Strings.userModelId],
+      userId: jsonData[Strings.userModelId],
       userName: jsonData[Strings.userModelName],
       imagePath: jsonData[Strings.userModelImagePath],
     );
   }
 
   static Map<String, dynamic> toMap(UserModel userModel) => {
-    Strings.userModelId: userModel.uuid,
+    Strings.userModelId: userModel.userId,
     Strings.userModelName: userModel.userName,
     Strings.userModelImagePath: userModel.imagePath,
   };

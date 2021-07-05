@@ -5,10 +5,12 @@ import 'package:my_message/resources/themes.dart';
 class MessageContainerWidget extends StatelessWidget {
   
   final bool isCurrentUser;
-  
+  final String text;
+
   const MessageContainerWidget({
     Key? key, 
     required this.isCurrentUser,
+    required this.text,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class MessageContainerWidget extends StatelessWidget {
         color: isCurrentUser ? Theme.of(context).primaryColor : MyColors.containerColor,
       ),
       child: Text(
-        "Ceci est un message de test",
+        text,
         style: Theme.of(context).textTheme.bodyText1?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w500,

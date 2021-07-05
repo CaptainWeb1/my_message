@@ -27,6 +27,7 @@ class Strings {
   //Messages
   static const String tapMessage = "Tapez votre message…";
   static const String exampleDate = "13/05/21 - 18:50";
+  static const String noMessages = "Vous n'avez pas encore de messages avec cette personne";
 
   //Errors
   static const String errorFirebaseInit = "Erreur d'initialisation firebase";
@@ -48,7 +49,7 @@ class Strings {
 
   //Firebase Queries & Models
   static const String usersCollection = "users";
-  static const String userModelId = "uuid";
+  static const String userModelId = "userId";
   static const String userModelName = "userName";
   static const String userModelImagePath = "imagePath";
   static const String roomsCollection = "rooms";
@@ -62,15 +63,6 @@ class ImagesPaths {
   static const String logoPath = "assets/images/Logo-App-Createur-Pro-sombre.png";
 
 }
-
-/*
-GridView.count(
-mainAxisSpacing: 20,
-crossAxisSpacing: 20,
-crossAxisCount: 1,
-childAspectRatio: 7.23,
-children: [
-*/
 
 
 

@@ -126,7 +126,7 @@ class MessageTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.of(context).pushNamed(PAGE_CHAT),
+      onTap: () => Navigator.of(context).pushNamed(PAGE_ROOM, arguments: _usersFiltered[index]),
       leading: Image.asset(
           _usersFiltered[index]?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
       ),

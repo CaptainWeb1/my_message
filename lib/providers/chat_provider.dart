@@ -22,7 +22,10 @@ class ChatProvider {
   static Stream<QuerySnapshot<dynamic>> getRoomMessages({required String peerId}) {
     return FirebaseFirestore.instance
         .collection(Strings.roomsCollection)
-        .where(Strings.usersCollection, arrayContains: "${FirebaseAuth.instance.currentUser?.uid}")
+        .doc("1234")
+        .collection("messages")
+        .where(Strings.userModelId, isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+        //.where(Strings.userModelId, isEqualTo: peerId)
         .snapshots();
   }
 
