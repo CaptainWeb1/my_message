@@ -148,7 +148,11 @@ class _RoomScreenState extends State<RoomScreen> {
                     child: SizedBox(
                       height: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {  },
+                        onPressed: () {
+                          ChatProvider.setMessage(
+                              peerId: _peerUser?.userId ?? UniqueKey().toString(),
+                              message: _message);
+                        },
                         child: Icon(
                             Icons.send_sharp,
                             size: 28,

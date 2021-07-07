@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:my_message/models/message_model.dart';
 import 'package:my_message/models/room_model.dart';
 import 'package:my_message/resources/strings.dart';
@@ -20,23 +21,28 @@ class ChatProvider {
   }
 
   static Stream<QuerySnapshot<dynamic>> getRoomMessages({required String peerId}) {
-    return FirebaseFirestore.instance
+    List<String> _ids = _sortIds(peerId);
+
+   return FirebaseFirestore.instance
         .collection(Strings.roomsCollection)
-        .doc("1234")
-        .collection("messages")
-        .where(Strings.userModelId, isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-        //.where(Strings.userModelId, isEqualTo: peerId)
+        .doc(_ids[0]+":"+_ids[1])
+        .collection(Strings.messagesCollection)
+        .orderBy(Strings.messageModelTimestamp)
         .snapshots();
   }
 
   static void setMessage({required String peerId, required String message}) {
+    List<String> _ids = _sortIds(peerId);
+
     MessageModel _messageModel = MessageModel(
         textMessage: message,
         timeMessage: DateTime.now(),
-        userId: FirebaseAuth.instance.currentUser?.uid ?? "no_user"
+        userId: FirebaseAuth.instance.currentUser?.uid ?? UniqueKey().toString()
     );
     FirebaseFirestore.instance
         .collection(Strings.roomsCollection)
+        .doc(_ids[0]+":"+_ids[1])
+        .collection(Strings.messagesCollection)
         .add(MessageModel.toMap(_messageModel));
   }
 
@@ -45,8 +51,21 @@ class ChatProvider {
     return FirebaseFirestore.instance
         .collection(Strings.usersCollection)
         .limit(50)
-        .where('userName', isGreaterThanOrEqualTo: query, isLessThan: query.substring(0, query.length-1) + String.fromCharCode(query.codeUnitAt(query.length - 1) + 1))
+        .where(
+          'userName',
+          isGreaterThanOrEqualTo: query,
+          isLessThan: query.substring(0, query.length-1) + String.fromCharCode(query.codeUnitAt(query.length - 1) + 1))
         .get();
   }
+
+  static List<String> _sortIds(String peerId) {
+    List<String> _ids = [];
+    String _currentUser = FirebaseAuth.instance.currentUser?.uid ?? UniqueKey().toString();
+    _ids..add(_currentUser)
+      ..add(peerId);
+    _ids.sort();
+    return _ids;
+  }
+
 
 }

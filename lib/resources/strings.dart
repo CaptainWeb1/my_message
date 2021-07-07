@@ -56,6 +56,8 @@ class Strings {
   static const String messageModelTextMessage = "textMessage";
   static const String messageModelTimestamp = "timestamp";
   static const String messageModelUserId = "userId";
+  static const String messagesCollection = "messages";
+
 }
 
 class ImagesPaths {
