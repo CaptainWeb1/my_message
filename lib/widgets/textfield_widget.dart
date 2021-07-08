@@ -9,11 +9,16 @@ class TextFieldWidget extends StatefulWidget {
 
   final TextFieldParameters textFieldParameters;
   final ValueChanged<String> valueChanged;
+  final FocusNode? focusNode;
+  final TextEditingController? textEditingController;
 
   TextFieldWidget({
     Key? key,
     required this.textFieldParameters,
     required this.valueChanged,
+    this.focusNode,
+    this.textEditingController,
+
   }) : super(key: key);
 
   @override
@@ -23,10 +28,14 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   late TextFieldParameters _textFieldParameters;
+  FocusNode? _focusNode;
+  TextEditingController? _textFieldController;
 
   @override
   void initState() {
     super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
+    _textFieldController = widget.textEditingController ?? TextEditingController();
     _textFieldParameters = widget.textFieldParameters;
     if (_textFieldParameters is PasswordTextFieldParameters) {
       _textFieldParameters.iconTap = _revealObscureText;
@@ -36,6 +45,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: _textFieldController,
+      focusNode: _focusNode,
       textAlignVertical: TextAlignVertical.center,
       style: MyTextStyles.formPlaceHolder.copyWith(
         color: Theme.of(context).primaryColor

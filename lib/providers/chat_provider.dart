@@ -27,7 +27,7 @@ class ChatProvider {
         .collection(Strings.roomsCollection)
         .doc(_ids[0]+":"+_ids[1])
         .collection(Strings.messagesCollection)
-        .orderBy(Strings.messageModelTimestamp)
+        .orderBy(Strings.messageModelTimestamp, descending: true)
         .snapshots();
   }
 
@@ -43,7 +43,8 @@ class ChatProvider {
         .collection(Strings.roomsCollection)
         .doc(_ids[0]+":"+_ids[1])
         .collection(Strings.messagesCollection)
-        .add(MessageModel.toMap(_messageModel));
+        .add(MessageModel.toMap(_messageModel)
+    );
   }
 
   static Future<QuerySnapshot<Map<String, dynamic>>> getUsers({required String query}) {

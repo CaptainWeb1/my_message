@@ -27,6 +27,16 @@ class _RoomScreenState extends State<RoomScreen> {
 
   String _message = "";
   UserModel? _peerUser;
+  FocusNode? _focusNode;
+  TextEditingController? _textEditingController;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController();
+    _focusNode = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +71,7 @@ class _RoomScreenState extends State<RoomScreen> {
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot<dynamic>>(
-            stream: ChatProvider.getRoomMessages(peerId: _peerUser?.userId ?? "no_user"),
+            stream: ChatProvider.getRoomMessages(peerId: _peerUser?.userId ?? UniqueKey().toString()),
             builder: (context, snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting) {
                 return Expanded(
@@ -79,9 +89,10 @@ class _RoomScreenState extends State<RoomScreen> {
                         child: (_messageModels.length > 0)
                           ? ListView.builder(
                             itemCount: _messageModels.length,
+                            reverse: true,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.only(bottom: 40.0),
+                                padding: const EdgeInsets.only(bottom: 20.0),
                                 child: Column(
                                   crossAxisAlignment: (index == 0) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                                   children: [
@@ -124,23 +135,31 @@ class _RoomScreenState extends State<RoomScreen> {
               }
             }
           ),
-          Expanded(
+          Container(
+            height: 80,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Spacer(),
                 Expanded(
-                    child: TextFieldWidget(
-                        textFieldParameters: TextFieldParameters(
-                          hintText: Strings.tapMessage,
-                          iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
-                          textStyle: MyTextStyles.formPlaceHolder.copyWith(
-                              fontSize: 17
+                    child: Container(
+                      height: 400,
+                      alignment: Alignment.center,
+                      child: TextFieldWidget(
+                          textFieldParameters: TextFieldParameters(
+                            hintText: Strings.tapMessage,
+                            iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
+                            textStyle: MyTextStyles.formPlaceHolder.copyWith(
+                                fontSize: 17
+                            ),
                           ),
-                        ),
-                      valueChanged: (value) {
-                        _message = value;
-                      },
+                        valueChanged: (value) {
+                          _message = value;
+                        },
+                        textEditingController: _textEditingController,
+                        focusNode: _focusNode,
                   ),
+                    ),
                   flex: 18,
                 ),
                 Spacer(),
@@ -149,6 +168,9 @@ class _RoomScreenState extends State<RoomScreen> {
                       height: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
+                          setState(() {
+                            _textEditingController?.clear();
+                          });
                           ChatProvider.setMessage(
                               peerId: _peerUser?.userId ?? UniqueKey().toString(),
                               message: _message);
@@ -169,7 +191,7 @@ class _RoomScreenState extends State<RoomScreen> {
               ],
             ),
           ),
-          SizedBox(height: 25,)
+          SizedBox(height: 15,)
         ],
       ),
     );
