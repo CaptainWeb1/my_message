@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "107161339776",
+    "project_id": "chat-app-aabe4",
+    "storage_bucket": "chat-app-aabe4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107161339776:android:9118aa34ffa29704bf6365",
+        "android_client_info": {
+          "package_name": "fr.appcreateurpro.my_message"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107161339776-h8hamf6gpuqa60hqqpp4nnca2ukpm23j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGomNy-4QHH4I32Ar_3vRXKsQ22NDpBsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107161339776-h8hamf6gpuqa60hqqpp4nnca2ukpm23j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

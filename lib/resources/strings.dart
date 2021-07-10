@@ -21,6 +21,10 @@ class Strings {
   static const String tapMessage = "Tapez votre message…";
   static const String search = "Recherchez...";
   static const String exampleDate = "13/05/21 - 18:50";
+
+  //Errors
+  static const String errorFirebaseInit = "Erreur d'initialisation firebase";
+
 }
 
 class ImagesPaths {
