@@ -30,6 +30,7 @@ ThemeData theme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     fillColor: MyColors.containerColor,
     filled: true,
+    hoverColor: Colors.red,
     hintStyle: MyTextStyles.formPlaceHolder,
     contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 17),
     focusedBorder: OutlineInputBorder(
