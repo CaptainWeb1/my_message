@@ -17,6 +17,7 @@ class Strings {
   static const String signUpTitle = "Inscription";
   static const String signIn = "Se connecter";
   static const String acceptConditions = "J’accepte les conditions d’utilisation";
+  static const String successRegister = "L'inscription est un succès";
 
   //Messages
   static const String tapMessage = "Tapez votre message…";
@@ -31,7 +32,12 @@ class Strings {
   //Form errors
   static const String errorEmptyField = "Le champs de formulaire ne peut pas être vide";
   static const String errorPasswordLength = "Le mot de passe doit faire au moins 8 caractères";
+  static const String errorPasswordWeak = "Le mot de passe est trop faible";
+  static const String errorNotEmail = "Ce n'est pas un format d'adresse email";
 
+  //Auth firebase errors
+  static const String errorAuthSignUp = "Erreur d'inscription";
+  static const String errorAccountAlreadyExists = "Le compte existe déjà avec cet email";
 
 }
 

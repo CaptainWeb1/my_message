@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
@@ -81,7 +82,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         buttonText: Strings.signUp,
                         onPressed: () {
                           if(_formKey.currentState!.validate()) {
-                            print("lancer une inscription");
+                            AuthenticationProvider().signUp(
+                                email: _email,
+                                password: _password,
+                                userName: _username,
+                                context: context
+                            );
                           }
                         },
                       ),
