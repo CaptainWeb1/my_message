@@ -5,6 +5,7 @@ import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/screens/messages_screen.dart';
 import 'package:my_message/screens/sign_in_screen.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -29,13 +30,7 @@ class MyApp extends StatelessWidget {
       builder: (initFirebaseContext, snapshot) {
         //Check for errors
         if (snapshot.hasError) {
-          showDialog(
-            context: initFirebaseContext,
-            builder: (_) {
-              return Dialog(
-                child: Text(Strings.errorFirebaseInit),
-              );
-            });
+          NavigationUtils.showMyDialog(context: initFirebaseContext, bodyText: Strings.errorFirebaseInit);
         }
         //Once complete, show your application
         if(snapshot.connectionState == ConnectionState.done) {
@@ -45,27 +40,30 @@ class MyApp extends StatelessWidget {
             ],
             builder: (providerContext, widget) {
               return MaterialApp(
-                title: 'My Message',
+                title: Strings.titleApp,
                 theme: theme,
                 onGenerateRoute: RouteGenerator.generateRoute,
                 home: StreamBuilder(
-                    stream: AuthenticationProvider().userState,
-                    builder: (authStreamContext, snapshot) {
-                      if(snapshot.hasError) {
-                        //show dialog error
-                        return SignInScreen();
+                  stream: AuthenticationProvider().userState,
+                  builder: (authStreamContext, snapshot) {
+                    if(snapshot.hasError) {
+                      NavigationUtils.showMyDialog(
+                          context: authStreamContext,
+                          bodyText: Strings.errorAuthStream
+                      );
+                      return SignInScreen();
+                    } else {
+                      if(snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
                       } else {
-                        if(snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                        if(snapshot.data != null) {
+                          return MessagesScreen();
                         } else {
-                          if(snapshot.data != null) {
-                            return MessagesScreen();
-                          } else {
-                            return SignInScreen();
-                          }
+                          return SignInScreen();
                         }
                       }
                     }
+                  }
                 ),
                 debugShowCheckedModeBanner: false,
               );
@@ -73,7 +71,6 @@ class MyApp extends StatelessWidget {
           );
         }
         return CircularProgressIndicator();
-
       }
     );
   }

@@ -2,6 +2,7 @@
 class Strings {
   //General
   static const String titleApp = "Chat App";
+  static const String ok = "OK";
 
   static const String email = "Email";
   static const String password = "Mot de passe";
@@ -23,7 +24,9 @@ class Strings {
   static const String exampleDate = "13/05/21 - 18:50";
 
   //Errors
+  static const String errorGenerics = "Une erreur est survenue";
   static const String errorFirebaseInit = "Erreur d'initialisation firebase";
+  static const String errorAuthStream = "Erreur lors de la récupération des utilisateurs";
 
 }
 
