@@ -38,6 +38,10 @@ class Strings {
   //Auth firebase errors
   static const String errorAuthSignUp = "Erreur d'inscription";
   static const String errorAccountAlreadyExists = "Le compte existe déjà avec cet email";
+  static const String errorNoUserForThisEmail = "Pas d'utilisateur trouvé pour cet email";
+  static const String errorWrongPassword = "Le mot de passe est erroné";
+  static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
+  static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
 
 }
 

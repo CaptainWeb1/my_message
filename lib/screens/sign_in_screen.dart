@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/app_config.dart';
@@ -61,7 +62,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         _password = value;
                       },
                     ),
-                    ButtonWidget(buttonText: Strings.signIn, onPressed: () => Navigator.pushNamed(context, PAGE_MESSAGES),),
+                    ButtonWidget(
+                      buttonText: Strings.signIn,
+                      onPressed: () {
+                        AuthenticationProvider().signIn(
+                            email: _email,
+                            password: _password,
+                            context: context
+                        );
+                      }
+                    ),
                   ],
                 ),
               ),
