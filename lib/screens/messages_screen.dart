@@ -5,8 +5,16 @@ import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class MessagesScreen extends StatelessWidget {
+class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key}) : super(key: key);
+
+  @override
+  _MessagesScreenState createState() => _MessagesScreenState();
+}
+
+class _MessagesScreenState extends State<MessagesScreen> {
+
+  String _searchText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,9 @@ class MessagesScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFieldWidget(
                 textFieldParameters: SearchTextFieldParameters(),
+                valueChanged: (value) {
+                  _searchText = value;
+                },
               ),
             ),
             Expanded(

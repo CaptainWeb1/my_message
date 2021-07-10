@@ -8,10 +8,12 @@ import 'package:my_message/widgets/icon_widget.dart';
 class TextFieldWidget extends StatefulWidget {
 
   final TextFieldParameters textFieldParameters;
+  final ValueChanged<String> valueChanged;
 
   TextFieldWidget({
     Key? key,
     required this.textFieldParameters,
+    required this.valueChanged,
   }) : super(key: key);
 
   @override
@@ -30,32 +32,33 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: MyShapes.circularBorders,
-        color: MyColors.containerColor,
-      ),
-      constraints: BoxConstraints(
-          minHeight: MySizes.minimumHeightInputs
-      ),
-      child: TextFormField(
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-            fillColor: MyColors.containerColor,
-            hintText: _textFieldParameters.hintText,
-            hintStyle: _textFieldParameters.textStyle,
-            contentPadding: EdgeInsets.symmetric(horizontal: 30),
-            border: InputBorder.none,
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 23.0),
-              child: _textFieldParameters.iconWidget,
-            ),
+    return TextFormField(
+      textAlignVertical: TextAlignVertical.center,
+      decoration: InputDecoration(
+        hintText: _textFieldParameters.hintText,
+        hintStyle: _textFieldParameters.textStyle ?? MyTextStyles.formPlaceHolder,
+        suffixIcon: GestureDetector(
+          onTap: _textFieldParameters.iconTap,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 23.0),
+            child:
+              (_textFieldParameters is PasswordTextFieldParameters)
+                ? (_textFieldParameters.obscureText)
+                  ? IconWidget(icon: Icons.visibility)
+                  : IconWidget(icon: Icons.visibility_off)
+                : _textFieldParameters.iconWidget
+          ),
         ),
-        obscureText: _textFieldParameters.obscureText,
-        autocorrect: _textFieldParameters.autoCorrect,
-        inputFormatters: _textFieldParameters.textInputFormatters,
       ),
+      obscureText: _textFieldParameters.obscureText,
+      autocorrect: _textFieldParameters.autoCorrect,
+      inputFormatters: _textFieldParameters.textInputFormatters,
+      onChanged: (String? value) {
+        widget.valueChanged(value ?? "");
+      },
+      onFieldSubmitted: (String? value) {
+        widget.valueChanged(value ?? "");
+      },
     );
   }
 }
@@ -92,7 +95,7 @@ class PasswordTextFieldParameters extends TextFieldParameters {
   PasswordTextFieldParameters({
     this.hintText = Strings.password,
     this.iconWidget = const IconWidget(
-        icon: Icons.visibility
+      icon: Icons.visibility
     )
   }) : super(
     hintText: hintText,
@@ -103,12 +106,11 @@ class PasswordTextFieldParameters extends TextFieldParameters {
 }
 
 class SearchTextFieldParameters extends TextFieldParameters {
-
   final String? hintText;
   final IconWidget? iconWidget;
 
   SearchTextFieldParameters({
-    this.hintText,
+    this.hintText = Strings.search,
     this.iconWidget = const IconWidget(
         icon: Icons.search
     )

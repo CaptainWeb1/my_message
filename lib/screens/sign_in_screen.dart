@@ -7,8 +7,17 @@ import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/button_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+
+  String _email = "";
+  String _password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +51,15 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     TextFieldWidget(
                       textFieldParameters: EmailTextFieldParameters(),
+                      valueChanged: (value) {
+                        _email = value;
+                      },
                     ),
                     TextFieldWidget(
                       textFieldParameters: PasswordTextFieldParameters(),
+                      valueChanged: (value) {
+                        _password = value;
+                      },
                     ),
                     ButtonWidget(buttonText: Strings.signIn, onPressed: () => Navigator.pushNamed(context, PAGE_MESSAGES),),
                   ],

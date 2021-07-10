@@ -6,8 +6,16 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class RoomScreen extends StatelessWidget {
+class RoomScreen extends StatefulWidget {
   const RoomScreen({Key? key}) : super(key: key);
+
+  @override
+  _RoomScreenState createState() => _RoomScreenState();
+}
+
+class _RoomScreenState extends State<RoomScreen> {
+
+  String _message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +85,14 @@ class RoomScreen extends StatelessWidget {
                         textFieldParameters: TextFieldParameters(
                           hintText: Strings.tapMessage,
                           iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
-                          textStyle: MyTextStyles.buttonPlaceHolder.copyWith(
+                          textStyle: MyTextStyles.formPlaceHolder.copyWith(
                               fontSize: 17
                           ),
                         ),
+                      valueChanged: (value) {
+                        _message = value;
+                        print(value);
+                      },
                   ),
                   flex: 18,
                 ),
