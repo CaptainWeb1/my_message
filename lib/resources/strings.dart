@@ -43,6 +43,12 @@ class Strings {
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
 
+  //Firebase Queries & Models
+  static const String usersCollection = "users";
+  static const String userModelId = "userId";
+  static const String userModelName = "userName";
+  static const String userModelImagePath = "imagePath";
+
 }
 
 class ImagesPaths {
