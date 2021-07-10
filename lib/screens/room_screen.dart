@@ -6,8 +6,8 @@ import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+class RoomScreen extends StatelessWidget {
+  const RoomScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +74,12 @@ class ChatScreen extends StatelessWidget {
                 Spacer(),
                 Expanded(
                     child: TextFieldWidget(
-                        hintText: Strings.tapMessage,
-                        iconData: IconWidget(icon: Icons.camera_alt_rounded),
-                        textStyle: MyTextStyles.buttonPlaceHolder.copyWith(
-                          fontSize: 17
+                        textFieldParameters: TextFieldParameters(
+                          hintText: Strings.tapMessage,
+                          iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
+                          textStyle: MyTextStyles.buttonPlaceHolder.copyWith(
+                              fontSize: 17
+                          ),
                         ),
                   ),
                   flex: 18,

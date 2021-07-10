@@ -11,39 +11,39 @@ class NavigationUtils {
     VoidCallback? onClick
   }) {
     showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return AlertDialog(
-            title: Text(bodyText),
-            actions: [
-              Center(
-                child: ElevatedButton(
-                  onPressed: onClick ?? () => Navigator.of(context).pop(),
-                  child: Text(
-                    Strings.ok,
-                    textAlign: TextAlign.center,
-                  ),
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: Text(bodyText),
+          actions: [
+            Center(
+              child: ElevatedButton(
+                onPressed: onClick ?? () => Navigator.of(context).pop(),
+                child: Text(
+                  Strings.ok,
+                  textAlign: TextAlign.center,
                 ),
-              )
-            ],
-          );
-        }
+              ),
+            )
+          ],
+        );
+      }
     );
   }
 
   static void showLoadingDialog(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return Dialog(
-            backgroundColor: Colors.transparent,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
             ),
-          );
-        }
+          ),
+        );
+      }
     );
   }
 

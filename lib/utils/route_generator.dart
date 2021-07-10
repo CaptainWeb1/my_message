@@ -1,8 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_message/screens/chat_screen.dart';
 import 'package:my_message/screens/messages_screen.dart';
+import 'package:my_message/screens/room_screen.dart';
 import 'package:my_message/screens/sign_in_screen.dart';
 import 'package:my_message/screens/sign_up_screen.dart';
 import 'package:my_message/screens/unknown_screen.dart';
@@ -14,7 +14,7 @@ class RouteGenerator {
       case PAGE_SIGN_IN : return MaterialPageRoute(builder: (_) => SignInScreen());
       case PAGE_SIGN_UP : return MaterialPageRoute(builder: (_) => SignUpScreen());
       case PAGE_MESSAGES : return MaterialPageRoute(builder: (_) => MessagesScreen());
-      case PAGE_CHAT : return MaterialPageRoute(builder: (_) => ChatScreen());
+      case PAGE_CHAT : return MaterialPageRoute(builder: (_) => RoomScreen());
       default: return MaterialPageRoute(builder: (_) => UnknownScreen());
     }
   }

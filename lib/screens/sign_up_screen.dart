@@ -33,13 +33,24 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFieldWidget(hintText: Strings.email,),
+                    TextFieldWidget(
+                      textFieldParameters: EmailTextFieldParameters(),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.password,),
+                    TextFieldWidget(
+                      textFieldParameters: PasswordTextFieldParameters(),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.name,),
+                    TextFieldWidget(
+                      textFieldParameters: NameTextFieldParameters(),
+                    ),
                     Spacer(),
-                    TextFieldWidget(hintText: Strings.dateSelect, iconData: IconWidget(icon: Icons.calendar_today)),
+                    TextFieldWidget(
+                      textFieldParameters: TextFieldParameters(
+                          hintText: Strings.dateSelect,
+                          iconWidget: IconWidget(icon: Icons.calendar_today)
+                      ),
+                    ),
                     Spacer(),
                     ButtonWidget(
                       buttonText: Strings.signUp,

@@ -8,7 +8,6 @@ import 'package:my_message/screens/sign_in_screen.dart';
 import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 import 'package:provider/provider.dart';
-
 import 'resources/strings.dart';
 
 void main() async {

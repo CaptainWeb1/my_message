@@ -3,7 +3,6 @@ import 'package:my_message/models/user_model.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/route_generator.dart';
-import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -32,10 +31,7 @@ class MessagesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFieldWidget(
-                hintText: Strings.search,
-                iconData: IconWidget(
-                icon: Icons.search,
-              ),
+                textFieldParameters: SearchTextFieldParameters(),
               ),
             ),
             Expanded(

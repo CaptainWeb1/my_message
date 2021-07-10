@@ -40,8 +40,12 @@ class SignInScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFieldWidget(hintText: Strings.email,),
-                    TextFieldWidget(hintText: Strings.password,),
+                    TextFieldWidget(
+                      textFieldParameters: EmailTextFieldParameters(),
+                    ),
+                    TextFieldWidget(
+                      textFieldParameters: PasswordTextFieldParameters(),
+                    ),
                     ButtonWidget(buttonText: Strings.signIn, onPressed: () => Navigator.pushNamed(context, PAGE_MESSAGES),),
                   ],
                 ),
