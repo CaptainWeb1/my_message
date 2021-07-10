@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                 theme: theme,
                 onGenerateRoute: RouteGenerator.generateRoute,
                 home: StreamBuilder(
-                  stream: AuthenticationProvider().listenUserStateChange(),
+                  stream: AuthenticationProvider().userState,
                   builder: (authStreamContext, snapshot) {
                     if (snapshot.hasError) {
                       NavigationUtils.showMyDialog(context: context, bodyText: snapshot.error.toString());

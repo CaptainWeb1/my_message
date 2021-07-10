@@ -3,21 +3,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_message/models/message_model.dart';
-import 'package:my_message/models/room_model.dart';
 import 'package:my_message/resources/strings.dart';
 
 class ChatProvider {
 
   static User? get currentUser => FirebaseAuth.instance.currentUser;
 
-  static void setRoomMessages({required String peerId}) {
-    RoomModel _room = RoomModel(
-      currentUserId: FirebaseAuth.instance.currentUser?.uid ?? "no_user",
-      peerUserId: peerId
-    );
-    FirebaseFirestore.instance.collection(Strings.roomsCollection).add(
-      RoomModel.toMap(_room)
-    );
+  static Stream<QuerySnapshot<dynamic>> getRooms() {
+    return FirebaseFirestore.instance
+        .collection(Strings.roomsCollection)
+        .where(Strings.userModelId, isEqualTo: currentUser?.uid)
+        .orderBy(Strings.messageModelTimestamp, descending: true)
+        .snapshots();
+    /*return FirebaseFirestore.instance
+        .collection(Strings.roomsCollection)
+        .doc("zADS68f1n2RDVa0qTc98mq8usdl2:zFCT68f1n2RDVa0qTc98mq8usdl2")
+        .collection("messages")
+        .where("userId", isEqualTo: "zFCT68f1n2RDVa0qTc98mq8usdl2")
+        .snapshots();*/
   }
 
   static Stream<QuerySnapshot<dynamic>> getRoomMessages({required String peerId}) {
@@ -53,7 +56,7 @@ class ChatProvider {
         .collection(Strings.usersCollection)
         .limit(50)
         .where(
-          'userName',
+          Strings.userModelName,
           isGreaterThanOrEqualTo: query,
           isLessThan: query.substring(0, query.length-1) + String.fromCharCode(query.codeUnitAt(query.length - 1) + 1))
         .get();

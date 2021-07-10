@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_message/models/message_model.dart';
 import 'package:my_message/models/user_model.dart';
 import 'package:my_message/providers/authentication_provider.dart';
+import 'package:my_message/providers/chat_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/utils/route_generator.dart';
+import 'package:my_message/widgets/circular_progress_indicator_widget.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
 
@@ -21,7 +25,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   List<UserModel> _usersFiltered = [];
 
-  void _filterMessages() {
+  void _filterMessages(List<UserModel> users) {
     List<UserModel> _usersToFilter = [];
     setState(() {
       if (_searchText == "") {
@@ -39,70 +43,84 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _usersFiltered = List.from(users);
-  }
-
-  @override
   Widget build(BuildContext context) {
     AuthenticationProvider().reloadFirebase(context: context);
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            Spacer(flex: 2,),
-            Padding(
-              padding: const EdgeInsets.only(left: 6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Strings.titleApp,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  IconButton(
-                    onPressed: () => AuthenticationProvider().signOut(context),
-                    icon: IconWidget(
-                      icon: Icons.power_settings_new_outlined,
-                      size: 25,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Spacer(flex: 1,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFieldWidget(
-                textFieldParameters: SearchTextFieldParameters(),
-                valueChanged: (value) {
-                  _searchText = value;
-                  _filterMessages();
-                },
-              ),
-            ),
-            Expanded(
-              flex: 14,
-              child: ListView.builder(
-                  itemBuilder: (context, index) {
+      body: StreamBuilder<QuerySnapshot<dynamic>>(
+              stream: ChatProvider.getRooms(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicatorWidget());
+                } else {
+                  if (snapshot.hasData) {
+                    List<QueryDocumentSnapshot<dynamic>> _docs = snapshot.data!.docs;
+                    List<MessageModel?> _messageModels = MessageModel.decodeMessages(_docs);
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 18.0),
-                      child: MessageTileWidget(
-                          key: UniqueKey(),
-                          usersFiltered: _usersFiltered,
-                          index: index,
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        children: [
+                          Spacer(flex: 2,),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  Strings.titleApp,
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context).textTheme.headline1,
+                                ),
+                                IconButton(
+                                  onPressed: () => AuthenticationProvider().signOut(context),
+                                  icon: IconWidget(
+                                    icon: Icons.power_settings_new_outlined,
+                                    size: 25,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Spacer(flex: 1,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: TextFieldWidget(
+                              textFieldParameters: SearchTextFieldParameters(),
+                              valueChanged: (value) {
+                                _searchText = value;
+                                _filterMessages([]);
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            flex: 14,
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 18.0),
+                                  child: MessageTileWidget(
+                                    key: UniqueKey(),
+                                    usersFiltered: _usersFiltered,
+                                    index: index,
+                                  ),
+                                );
+                              },
+                              itemCount: _usersFiltered.length,
+                            ),
+                          )
+                        ],
                       ),
                     );
-                  },
-                  itemCount: _usersFiltered.length,
-              ),
-            )
-          ],
-        ),
-      ),
+                  } else {
+                    return Center(
+                      child: Text(
+                        Strings.errorGetRoomsMessages,
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+                }
+              }
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed(PAGE_SEARCH),
         child: Icon(

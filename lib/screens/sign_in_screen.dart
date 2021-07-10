@@ -1,5 +1,4 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/resources/strings.dart';
@@ -26,8 +25,8 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: AuthenticationProvider().listenUserStateChange(),
+      body: StreamBuilder(
+        stream: AuthenticationProvider().userState,
         builder: (context, snapshot) {
           return Stack(
             children: [
@@ -97,6 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pushNamed(PAGE_SIGN_UP);
+                              _formKey.currentState?.reset();
                             },
                             style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero

@@ -42,34 +42,6 @@ class UserModel {
   }
 }
 
-List<UserModel> users = [
-   /*UserModel(
-    uniqueKey: UniqueKey(),
-    userName: "Jean-Michel",
-    imagePath: "assets/images/user_images/Jean-Michel.png"
-  ),
-  UserModel(
-      uniqueKey: UniqueKey(),
-      userName: "Micheline",
-      imagePath: "assets/images/user_images/Micheline.png"
-  ),
-  UserModel(
-      uniqueKey: UniqueKey(),
-      userName: "Brigitte Bardot",
-      imagePath: "assets/images/user_images/Brigitte Bardot.png"
-  ),
-  UserModel(
-      uniqueKey: UniqueKey(),
-      userName: "Nekfeu",
-      imagePath: "assets/images/user_images/Nekfeu.png"
-  ),
-  UserModel(
-      uniqueKey: UniqueKey(),
-      userName: "Inconnu",
-      imagePath: "assets/images/user_images/Inconnu.png"
-  )*/
-];
-
 
 /*
 'text': '',

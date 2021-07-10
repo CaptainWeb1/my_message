@@ -27,16 +27,8 @@ class _RoomScreenState extends State<RoomScreen> {
 
   String _message = "";
   UserModel? _peerUser;
-  FocusNode? _focusNode;
-  TextEditingController? _textEditingController;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController = TextEditingController();
-    _focusNode = FocusNode();
-  }
+  FocusNode? _focusNode = FocusNode();
+  TextEditingController? _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +86,11 @@ class _RoomScreenState extends State<RoomScreen> {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 20.0),
                                 child: Column(
-                                  crossAxisAlignment: (index == 0) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                                  crossAxisAlignment: (_messageModels[index]?.userId == AuthenticationProvider().currentUser?.uid) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                                   children: [
                                     if(_messageModels[index]?.textMessage != null)
                                     MessageContainerWidget(
-                                      isCurrentUser: (index == 0) ? true : false,
+                                      isCurrentUser: (_messageModels[index]?.userId == AuthenticationProvider().currentUser?.uid) ? true : false,
                                       text: _messageModels[index]?.textMessage ?? "",
                                     ),
                                     if(_messageModels[index]?.timeMessage != null)

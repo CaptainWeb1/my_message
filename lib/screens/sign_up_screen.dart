@@ -90,6 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 userName: _userName,
                                 context: context
                             );
+                            _formKey.currentState?.reset();
                           } else {
                             NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorAuthSignUp);
                           }

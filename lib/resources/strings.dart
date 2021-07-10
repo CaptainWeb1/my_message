@@ -46,6 +46,8 @@ class Strings {
   static const String errorWrongPassword = "Le mot de passe est erroné";
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
+  static const String errorGetRoomsMessages = "Erreur de récupération des conversations";
+  static const String retry = "Réessayer";
 
   //Firebase Queries & Models
   static const String usersCollection = "users";

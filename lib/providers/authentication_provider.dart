@@ -4,11 +4,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:async/async.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
-
 
 class AuthenticationProvider with ChangeNotifier {
 
@@ -18,14 +16,6 @@ class AuthenticationProvider with ChangeNotifier {
   Stream<User?> get userState => _firebaseAuth.authStateChanges();
   Stream<User?> get userIdTokenChange => _firebaseAuth.idTokenChanges();
   Stream<User?> get userChange => _firebaseAuth.userChanges();
-
-  Stream<User?> listenUserStateChange() {
-    return StreamGroup.merge([
-      userState,
-      userIdTokenChange,
-      userChange
-    ]);
-  }
 
   void register(
       {required String email,
