@@ -48,6 +48,9 @@ class Strings {
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
   static const String errorUserNotFound = "Utilisateur introuvable ou compte désactivé";
 
+  //Firestore errors
+  static const String getMessagesError = "Erreur de récupération des messages";
+
   //Auth firebase
   static const String alertConfirmSignOut = "Voulez vous vraiment vous déconnecter ?";
 
@@ -56,6 +59,13 @@ class Strings {
   static const String userModelId = "userId";
   static const String userModelName = "userName";
   static const String userModelImagePath = "imagePath";
+  static const String roomsCollection = "rooms";
+  static const String messagesCollection = "messages";
+  static const String messageModelTextMessage = "textMessage";
+  static const String messageModelTimestamp = "timestamp";
+  static const String noMessage = "Vous n'avez pas encore de messages avec cette personne";
+
+
 
 }
 

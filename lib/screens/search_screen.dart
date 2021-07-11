@@ -6,6 +6,7 @@ import 'package:my_message/models/user_model.dart';
 import 'package:my_message/providers/chat_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
+import 'package:my_message/utils/route_generator.dart';
 import 'package:my_message/widgets/circular_progress_indicator_widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -81,7 +82,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                     itemCount: _userModels.length,
                                     itemBuilder: (contextListView, index) {
                                       return ListTile(
-                                        onTap: () => print(""),
+                                        onTap: () => Navigator.of(context).pushNamed(
+                                          PAGE_ROOM,
+                                          arguments: _userModels[index]
+                                        ),
                                         leading: SizedBox(
                                           height: 45,
                                           width: 45,

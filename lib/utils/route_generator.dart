@@ -11,11 +11,12 @@ import 'package:my_message/screens/unknown_screen.dart';
 class RouteGenerator {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final _arguments = settings.arguments;
     switch(settings.name) {
       case PAGE_SIGN_IN : return MaterialPageRoute(builder: (_) => SignInScreen());
       case PAGE_SIGN_UP : return MaterialPageRoute(builder: (_) => SignUpScreen());
       case PAGE_MESSAGES : return MaterialPageRoute(builder: (_) => MessagesScreen());
-      case PAGE_ROOM : return MaterialPageRoute(builder: (_) => RoomScreen());
+      case PAGE_ROOM : return MaterialPageRoute(builder: (_) => RoomScreen(peerUserArgument: _arguments));
       case PAGE_SEARCH : return MaterialPageRoute(builder: (_) => SearchScreen());
       default: return MaterialPageRoute(builder: (_) => UnknownScreen());
     }

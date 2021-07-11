@@ -30,7 +30,7 @@ class UserModel {
     Strings.userModelImagePath: userModel.imagePath
   };
 
-  static String encodeUsers(List<UserModel?> users) {  //List<UserModel?>> => { "users": {"user1", {}, "user2 }
+  static String encodeUsers(List<UserModel?> users) {
     return json.encode(
       users.map(
         (user) => UserModel.toMap(user!)).toList()
