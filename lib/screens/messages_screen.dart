@@ -76,7 +76,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           onTap: () async {
                             bool _isUserStillConnected = await AuthenticationProvider().reloadFirebase(context: context);
                             if(_isUserStillConnected) {
-                              Navigator.of(context).pushNamed(PAGE_CHAT);
+                              Navigator.of(context).pushNamed(PAGE_ROOM);
                             }
                           } ,
                           leading: Image.asset(
@@ -108,6 +108,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
               )
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.of(context).pushNamed(PAGE_SEARCH),
+          child: Icon(
+            Icons.create
           ),
         ),
       ),
