@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:my_message/models/user_model.dart';
 import 'package:my_message/providers/chat_provider.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
@@ -74,25 +75,35 @@ class _SearchScreenState extends State<SearchScreen> {
                         } else {
                           if(snapshot.hasData) {
                             List<QueryDocumentSnapshot<dynamic>> _docs = snapshot.data!.docs;
-                            return ListView.builder(
-                                itemCount: 2,
-                                itemBuilder: (contextListView, index) {
-                                  return ListTile(
-                                    onTap: () => print(""),
-                                    leading: SizedBox(
-                                      height: 45,
-                                      width: 45,
-                                      child: Image.asset("assets/images/user_images/Brigitte Bardot.png"),
-                                    ),
-                                    title: Text(
-                                      "utilisateur",
-                                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                          fontSize: 16
-                                      ),
-                                    ),
-                                  );
-                                }
-                            );
+                            List<UserModel?> _userModels = UserModel.decodeUsers(_docs);
+                              if(_userModels.length > 0) {
+                                return ListView.builder(
+                                    itemCount: _userModels.length,
+                                    itemBuilder: (contextListView, index) {
+                                      return ListTile(
+                                        onTap: () => print(""),
+                                        leading: SizedBox(
+                                          height: 45,
+                                          width: 45,
+                                          child: Image.asset(
+                                              _userModels[index]?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
+                                          ),
+                                        ),
+                                        title: Text(
+                                          _userModels[index]?.userName ?? "utilisateur",
+                                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                              fontSize: 16
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                );
+                              } else {
+                                return Center(
+                                  child: Text(Strings.noContactFound),
+                                );
+                              }
+
                           } else {
                             return Center(
                               child: Text(Strings.noContactFound),
