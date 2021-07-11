@@ -48,9 +48,7 @@ class NavigationUtils {
   }
 
   static void hideDialog(BuildContext context) {
-    if(Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
-    }
+    Navigator.of(context).pop();
   }
 
 }

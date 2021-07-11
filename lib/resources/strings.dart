@@ -42,6 +42,10 @@ class Strings {
   static const String errorWrongPassword = "Le mot de passe est erroné";
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
+  static const String errorUserNotFound = "Utilisateur introuvable ou compte désactivé";
+
+  //Auth firebase
+  static const String alertConfirmSignOut = "Voulez vous vraiment vous déconnecter ?";
 
   //Firebase Queries & Models
   static const String usersCollection = "users";

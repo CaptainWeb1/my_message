@@ -24,8 +24,8 @@ class AuthenticationProvider with ChangeNotifier {
     NavigationUtils.showLoadingDialog(context);
     try {
       UserCredential _userCredentials = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password
       );
       User? _user = _userCredentials.user;
       
@@ -40,13 +40,13 @@ class AuthenticationProvider with ChangeNotifier {
       
       NavigationUtils.hideDialog(context);
       NavigationUtils.showMyDialog(
-          context: context,
-          bodyText: Strings.successRegister,
-          onClick: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              PAGE_SIGN_IN,
-              ModalRoute.withName(PAGE_SIGN_IN)
-          )
+        context: context,
+        bodyText: Strings.successRegister,
+        onClick: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            PAGE_SIGN_IN,
+            ModalRoute.withName(PAGE_SIGN_IN)
+        )
       );
     } on FirebaseAuthException catch (e) {
       NavigationUtils.hideDialog(context);
@@ -68,8 +68,8 @@ class AuthenticationProvider with ChangeNotifier {
     NavigationUtils.showLoadingDialog(context);
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password
       ).then((value) {
         NavigationUtils.hideDialog(context);
         Navigator.of(context).pushNamed(PAGE_MESSAGES);
@@ -91,13 +91,38 @@ class AuthenticationProvider with ChangeNotifier {
   void signOut({required BuildContext context}) async {
     NavigationUtils.showLoadingDialog(context);
     try {
-      _firebaseAuth.signOut().then((value) {
+      await _firebaseAuth.signOut().then((value) {
         NavigationUtils.hideDialog(context);
+        Navigator.of(context).pushNamed(PAGE_SIGN_IN);
       });
-    } catch (e) {
+    } catch(e) {
       NavigationUtils.hideDialog(context);
       NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorLogOut);
     }
+  }
+
+  Future<bool> reloadFirebase({required BuildContext context}) async {
+    bool _isUserStillConnected = true;
+    try {
+      await _firebaseAuth.currentUser?.reload();
+      User? _user = currentUser;
+      if(_user == null) {
+        _isUserStillConnected = false;
+        showDisconnectedDialog(context: context);
+      }
+    } on FirebaseAuthException catch(e) {
+      _isUserStillConnected = false;
+      showDisconnectedDialog(context: context);
+    }
+    return _isUserStillConnected;
+  }
+
+  void showDisconnectedDialog({required BuildContext context}) {
+    NavigationUtils.showMyDialog(
+        context: context,
+        bodyText: Strings.errorUserNotFound,
+        onClick: () => signOut(context: context)
+    );
   }
   
 
