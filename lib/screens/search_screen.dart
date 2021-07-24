@@ -70,7 +70,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: FutureBuilder<QuerySnapshot<dynamic>>(
                       future: _filteredUsers,
                       builder: (context, snapshot) {
-
                         if(snapshot.connectionState == ConnectionState.waiting) {
                           return CircularProgressIndicatorWidget();
                         } else {

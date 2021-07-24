@@ -1,11 +1,9 @@
 
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_message/resources/strings.dart';
 
 class MessageModel {
-
   final String textMessage;
   final DateTime timeMessage;
   final String userId;
