@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "920547604734",
+    "project_id": "chat-app-dbeb5",
+    "storage_bucket": "chat-app-dbeb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920547604734:android:cfd29c6303c51c8dbf8daf",
+        "android_client_info": {
+          "package_name": "fr.appcreateurpro.my_message"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920547604734-u33qq8u3dati4hfobes16vpjn9qkimds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoUQdffAeaGArRbuWdVbNpV71riSO4xgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920547604734-u33qq8u3dati4hfobes16vpjn9qkimds.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "920547604734-f65apt8esq3guaa4p60sedo5cibkj53a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.appcreateurpro.myMessage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

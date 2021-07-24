@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>107161339776-g2vqt62ka1r16vrvgc9659co003fhlab.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.107161339776-g2vqt62ka1r16vrvgc9659co003fhlab</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDGE-_aukzO7nUsrr1immChaJmbBVq88OY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>107161339776</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>fr.appcreateurpro.myMessage</string>
+	<key>PROJECT_ID</key>
+	<string>chat-app-aabe4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chat-app-aabe4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:107161339776:ios:31e9f82ab54e0f11bf6365</string>
+</dict>
+</plist>
