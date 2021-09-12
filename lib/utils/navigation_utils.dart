@@ -18,7 +18,7 @@ class NavigationUtils {
           actions: [
             Center(
               child: ElevatedButton(
-                onPressed: onClick ?? () => Navigator.of(context).pop(),
+                onPressed: onClick ?? () => Navigator.of(dialogContext).pop(),
                 child: Text(
                   Strings.ok,
                   textAlign: TextAlign.center,

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_message/resources/strings.dart';
+import 'package:my_message/utils/exception_utils.dart';
 import 'package:my_message/utils/navigation_utils.dart';
 import 'package:my_message/utils/route_generator.dart';
 
@@ -28,6 +29,8 @@ class AuthenticationProvider with ChangeNotifier {
         password: password
       );
       User? _user = _userCredentials.user;
+
+      await currentUser?.updatePhotoURL("assets/images/user_images/unknown-image.jpeg");
       
       await FirebaseFirestore.instance
           .collection(Strings.usersCollection)
@@ -37,7 +40,9 @@ class AuthenticationProvider with ChangeNotifier {
             Strings.userModelName: userName,
             Strings.userModelImagePath: _user?.photoURL
           });
-      
+
+      await currentUser?.updateDisplayName(userName);
+
       NavigationUtils.hideDialog(context);
       NavigationUtils.showMyDialog(
         context: context,
@@ -48,11 +53,12 @@ class AuthenticationProvider with ChangeNotifier {
             ModalRoute.withName(PAGE_SIGN_IN)
         )
       );
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
       NavigationUtils.hideDialog(context);
-      if(e.code == 'weak-password') {
+      if(error.code == 'weak-password') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorPasswordLength);
-      } else if (e.code == 'email-already-in-use'){
+      } else if (error.code == 'email-already-in-use'){
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorAccountAlreadyExists);
       } else {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorAuthSignUp);
@@ -74,13 +80,14 @@ class AuthenticationProvider with ChangeNotifier {
         NavigationUtils.hideDialog(context);
         Navigator.of(context).pushNamed(PAGE_MESSAGES);
       });
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch(error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
       NavigationUtils.hideDialog(context);
-      if (e.code == 'user-not-found') {
+      if (error.code == 'user-not-found') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorNoUserForThisEmail);
-      } else if (e.code == 'wrong-password') {
+      } else if (error.code == 'wrong-password') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorWrongPassword);
-      } else if (e.code == 'user-disabled') {
+      } else if (error.code == 'user-disabled') {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorUserDisabled);
       } else {
         NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorGenerics);
@@ -93,9 +100,10 @@ class AuthenticationProvider with ChangeNotifier {
     try {
       await _firebaseAuth.signOut().then((value) {
         NavigationUtils.hideDialog(context);
-        Navigator.of(context).pushNamed(PAGE_SIGN_IN);
+        Navigator.of(context).pushNamedAndRemoveUntil(PAGE_SIGN_IN, (Route<dynamic> route) => false);
       });
-    } catch(e) {
+    } catch(error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
       NavigationUtils.hideDialog(context);
       NavigationUtils.showMyDialog(context: context, bodyText: Strings.errorLogOut);
     }
@@ -110,7 +118,8 @@ class AuthenticationProvider with ChangeNotifier {
         _isUserStillConnected = false;
         showDisconnectedDialog(context: context);
       }
-    } on FirebaseAuthException catch(e) {
+    } on FirebaseAuthException catch(error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
       _isUserStillConnected = false;
       showDisconnectedDialog(context: context);
     }
