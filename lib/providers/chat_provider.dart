@@ -11,11 +11,25 @@ class ChatProvider {
 
   static User? get currentUser => FirebaseAuth.instance.currentUser;
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getRoomsLastMessage() {
+    return FirebaseFirestore.instance
+      .collection(Strings.roomsCollection)
+      .where(Strings.idsArrayFirestore, arrayContains: currentUser?.uid)
+      .snapshots();
+  }
+
   static Future<QuerySnapshot<Map<String, dynamic>>> getRoomFromSearch({required String peerId}) {
     List<String> _ids = sortIds(peerId);
     return FirebaseFirestore.instance
       .collection(Strings.roomsCollection)
       .where(Strings.idsArrayFirestore, isEqualTo: _ids)
+      .get();
+  }
+
+  static Future<QuerySnapshot<Map<String, dynamic>>> getUsersFromId({required List<String> userIds}) {
+    return FirebaseFirestore.instance
+      .collection(Strings.usersCollection)
+      .where(Strings.userModelId, whereIn: userIds)
       .get();
   }
 

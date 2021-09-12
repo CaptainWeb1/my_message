@@ -27,6 +27,7 @@ class Strings {
   //Messages
   static const String tapMessage = "Tapez votre message…";
   static const String exampleDate = "13/05/21 - 18:50";
+  static const String noRoomsYet = "Vous n'avez pas encore de conversation";
 
   //Errors
   static const String errorGenerics = "Une erreur est survenue";
@@ -73,9 +74,6 @@ class Strings {
   static const String lastIdFirestore = "lastId";
   static const String lastDateMessageFirestore = "lastDateMessage";
   static const String roomIdFirestore = "roomId";
-
-
-
 }
 
 class ImagesPaths {
