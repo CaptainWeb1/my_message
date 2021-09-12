@@ -7,7 +7,7 @@ import 'package:my_message/resources/strings.dart';
 
 class UserModel {
   final String? userId;
-  final String? userName;
+  final String userName;
   final String? imagePath;
 
   UserModel({

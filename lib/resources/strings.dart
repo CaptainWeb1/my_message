@@ -21,6 +21,7 @@ class Strings {
 
   //Search
   static const String search = "Recherchez...";
+  static const String filter = "Filtrez...";
   static const String searchContact = "Recherchez des personnes";
   static const String noContactFound = "Aucun contact trouvé";
 

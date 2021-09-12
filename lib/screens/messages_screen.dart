@@ -151,21 +151,23 @@ class _ListRoomsBodyWidgetState extends State<ListRoomsBodyWidget> {
   List<String> _roomIds = [];
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     _rooms = [...widget.rooms];
     _roomIds = [...widget.roomIds];
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: TextFieldWidget(
-            textFieldParameters: SearchTextFieldParameters(),
+            textFieldParameters: SearchTextFieldParameters(hintText: Strings.filter),
             valueChanged: (value) {
+              setState(() {
+                _rooms = [...widget.rooms];
+                _rooms.removeWhere((element) {
+                  bool _startWith = element.peerUser?.userName.startsWith(value) ?? false;
+                  return !_startWith;
+                });
+              });
             },
           ),
         ),
