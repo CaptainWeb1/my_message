@@ -6,7 +6,7 @@ ThemeData theme = ThemeData(
   primaryColor: MyColors.primary,
   scaffoldBackgroundColor: MyColors.backgroundPage,
   appBarTheme: AppBarTheme(
-    backgroundColor: MyColors.containerColor
+    backgroundColor: MyColors.containerColor,
   ),
   textTheme: TextTheme(
     headline1: MyTextStyles.title1,

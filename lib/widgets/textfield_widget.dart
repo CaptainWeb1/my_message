@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:my_message/resources/strings.dart';
 import 'package:my_message/resources/themes.dart';
 import 'package:my_message/widgets/icon_widget.dart';
-import 'package:my_message/utils/format_util.dart';
+import 'package:my_message/utils/format_utils.dart';
 
 class TextFieldWidget extends StatefulWidget {
 

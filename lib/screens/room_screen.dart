@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_message/models/message_model.dart';
-import 'package:my_message/models/user_model.dart';
+import 'package:my_message/models/room_model.dart';
 import 'package:my_message/providers/authentication_provider.dart';
 import 'package:my_message/providers/chat_provider.dart';
 import 'package:my_message/resources/strings.dart';
@@ -11,13 +11,13 @@ import 'package:my_message/widgets/circular_progress_indicator_widget.dart';
 import 'package:my_message/widgets/icon_widget.dart';
 import 'package:my_message/widgets/message_container_widget.dart';
 import 'package:my_message/widgets/textfield_widget.dart';
-import 'package:my_message/utils/format_util.dart';
+import 'package:my_message/utils/format_utils.dart';
 
 class RoomScreen extends StatefulWidget {
 
-  final dynamic peerUserArgument;
+  final dynamic roomArguments;
 
-  const RoomScreen({Key? key, required this.peerUserArgument}) : super(key: key);
+  const RoomScreen({Key? key, required this.roomArguments}) : super(key: key);
 
   @override
   _RoomScreenState createState() => _RoomScreenState();
@@ -26,12 +26,19 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
 
   String _message = "";
-  UserModel? _peerUser;
+  RoomModel? _roomModel;
   TextEditingController? _textEditingController = TextEditingController();
+  String _roomId = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _roomModel = widget.roomArguments;
+    _roomId = _roomModel?.roomId ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
-    _peerUser = widget.peerUserArgument;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 65,
@@ -43,7 +50,7 @@ class _RoomScreenState extends State<RoomScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          _peerUser?.userName ?? "pseudo",
+          _roomModel?.peerUser?.userName ?? "pseudo",
           style: Theme.of(context).textTheme.bodyText1?.copyWith(
             color: Colors.white,
             fontSize: 22,
@@ -55,7 +62,7 @@ class _RoomScreenState extends State<RoomScreen> {
           Padding(
             padding: const EdgeInsets.all(9.0),
             child: Image.asset(
-                _peerUser?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
+                _roomModel?.peerUser?.imagePath ?? "assets/images/user_images/unknown-image.jpeg"
             ),
           )
         ],
@@ -65,7 +72,7 @@ class _RoomScreenState extends State<RoomScreen> {
           Expanded(
             flex: 8,
             child: StreamBuilder<QuerySnapshot<dynamic>>(
-              stream: ChatProvider.getRoomMessages(peerId: _peerUser?.userId ?? UniqueKey().toString()),
+              stream: ChatProvider.getRoomMessages(roomId: _roomId),
               builder: (context, snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicatorWidget();
@@ -105,15 +112,23 @@ class _RoomScreenState extends State<RoomScreen> {
                         )
                       : Center(
                         child: Text(
-                          Strings.noMessage
+                          Strings.noMessage,
+                          textAlign: TextAlign.center,
                         ),
+                      ),
+                    );
+                  } else if(snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        Strings.getMessagesError,
+                        textAlign: TextAlign.center,
                       ),
                     );
                   } else {
                     return Center(
                       child: Text(
-                        Strings.getMessagesError,
-                        textAlign: TextAlign.center,
+                          Strings.noMessage,
+                          textAlign: TextAlign.center,
                       ),
                     );
                   }
@@ -127,18 +142,18 @@ class _RoomScreenState extends State<RoomScreen> {
               children: [
                 Spacer(),
                 Expanded(
-                    child: TextFieldWidget(
-                        textFieldParameters: TextFieldParameters(
-                          hintText: Strings.tapMessage,
-                          iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
-                          textStyle: MyTextStyles.formPlaceHolder.copyWith(
-                              fontSize: 17
-                          ),
+                  child: TextFieldWidget(
+                      textFieldParameters: TextFieldParameters(
+                        hintText: Strings.tapMessage,
+                        iconWidget: IconWidget(icon: Icons.camera_alt_rounded),
+                        textStyle: MyTextStyles.formPlaceHolder.copyWith(
+                            fontSize: 17
                         ),
-                      textEditingController: _textEditingController,
-                      valueChanged: (value) {
-                        _message = value;
-                      },
+                      ),
+                    textEditingController: _textEditingController,
+                    valueChanged: (value) {
+                      _message = value;
+                    },
                   ),
                   flex: 18,
                 ),
@@ -147,14 +162,17 @@ class _RoomScreenState extends State<RoomScreen> {
                     child: SizedBox(
                       height: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          _roomId = await ChatProvider.setMessage(
+                            context,
+                            peerId: _roomModel?.peerUser?.userId ?? UniqueKey().toString(),
+                            message: _message,
+                            roomId: _roomModel?.roomId
+                          ) ?? "";
                           setState(() {
                             _textEditingController?.clear();
+                            _roomModel?.roomId = _roomId;
                           });
-                          ChatProvider.setMessage(
-                            peerId: _peerUser?.userId ?? UniqueKey().toString(),
-                            message: _message
-                          );
                         },
                         child: Icon(
                             Icons.send_sharp,

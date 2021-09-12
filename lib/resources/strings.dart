@@ -47,9 +47,13 @@ class Strings {
   static const String errorUserDisabled = "Utilisateur supprimé par l'administrateur";
   static const String errorLogOut = "Deconnexion impossible, une erreur est survenue";
   static const String errorUserNotFound = "Utilisateur introuvable ou compte désactivé";
+  static const String errorGetRoomsMessages = "Erreur lors de la récupération des conversations";
+  static const String errorGetUsers = "Erreur lors de la récupération des infos utilisateur";
 
   //Firestore errors
   static const String getMessagesError = "Erreur de récupération des messages";
+  static const String getRoomError = "Erreur d'ouverture de la conversation";
+  static const String addMessageError = "Erreur lors de l'ajout d'un message";
 
   //Auth firebase
   static const String alertConfirmSignOut = "Voulez vous vraiment vous déconnecter ?";
@@ -64,6 +68,11 @@ class Strings {
   static const String messageModelTextMessage = "textMessage";
   static const String messageModelTimestamp = "timestamp";
   static const String noMessage = "Vous n'avez pas encore de messages avec cette personne";
+  static const String idsArrayFirestore = "userIds";
+  static const String lastMessageFirestore = "lastMessage";
+  static const String lastIdFirestore = "lastId";
+  static const String lastDateMessageFirestore = "lastDateMessage";
+  static const String roomIdFirestore = "roomId";
 
 
 

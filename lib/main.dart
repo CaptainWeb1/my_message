@@ -10,8 +10,9 @@ import 'package:my_message/utils/route_generator.dart';
 import 'package:provider/provider.dart';
 import 'resources/strings.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

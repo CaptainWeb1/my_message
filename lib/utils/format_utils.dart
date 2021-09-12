@@ -1,7 +1,7 @@
 
 import 'package:intl/intl.dart';
 
-class FormatUtil {}
+class FormatUtils {}
 
 extension EmailValidator on String {
   bool isValidEmail() {

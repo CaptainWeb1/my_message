@@ -16,7 +16,7 @@ class RouteGenerator {
       case PAGE_SIGN_IN : return MaterialPageRoute(builder: (_) => SignInScreen());
       case PAGE_SIGN_UP : return MaterialPageRoute(builder: (_) => SignUpScreen());
       case PAGE_MESSAGES : return MaterialPageRoute(builder: (_) => MessagesScreen());
-      case PAGE_ROOM : return MaterialPageRoute(builder: (_) => RoomScreen(peerUserArgument: _arguments));
+      case PAGE_ROOM : return MaterialPageRoute(builder: (_) => RoomScreen(roomArguments: _arguments));
       case PAGE_SEARCH : return MaterialPageRoute(builder: (_) => SearchScreen());
       default: return MaterialPageRoute(builder: (_) => UnknownScreen());
     }

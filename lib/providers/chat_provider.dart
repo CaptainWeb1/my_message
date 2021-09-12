@@ -1,15 +1,25 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:my_message/models/message_model.dart';
 import 'package:my_message/resources/strings.dart';
+import 'package:my_message/utils/exception_utils.dart';
+import 'package:my_message/utils/navigation_utils.dart';
 
 class ChatProvider {
 
   static User? get currentUser => FirebaseAuth.instance.currentUser;
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getUsers({required String query}) {
+  static Future<QuerySnapshot<Map<String, dynamic>>> getRoomFromSearch({required String peerId}) {
+    List<String> _ids = sortIds(peerId);
+    return FirebaseFirestore.instance
+      .collection(Strings.roomsCollection)
+      .where(Strings.idsArrayFirestore, isEqualTo: _ids)
+      .get();
+  }
+
+  static Future<QuerySnapshot<Map<String, dynamic>>> getUsersFromName({required String query}) {
     return FirebaseFirestore.instance
       .collection(Strings.usersCollection)
       .limit(50)
@@ -20,19 +30,20 @@ class ChatProvider {
       .get();
   }
 
-  static Stream<QuerySnapshot<dynamic>> getRoomMessages({required String peerId}) {
-    List<String> _ids = _sortIds(peerId);
-
-    return FirebaseFirestore.instance
-        .collection(Strings.roomsCollection)
-        .doc(_ids[0]+":"+_ids[1])
-        .collection(Strings.messagesCollection)
-        .orderBy(Strings.messageModelTimestamp, descending: true)
-        .snapshots();
+  static Stream<QuerySnapshot<dynamic>>? getRoomMessages({required String roomId}) {
+    String _roomId = roomId;
+    if(_roomId != "" ){
+      return FirebaseFirestore.instance
+          .collection(Strings.roomsCollection)
+          .doc(_roomId)
+          .collection(Strings.messagesCollection)
+          .orderBy(Strings.messageModelTimestamp, descending: true)
+          .snapshots();
+    }
   }
 
-  static void setMessage({required String peerId, required String message}) {
-    List<String> _ids = _sortIds(peerId);
+  static Future<String?>? setMessage(BuildContext context, {required String peerId, required String message, required String? roomId}) async {
+    List<String> _ids = sortIds(peerId);
 
     MessageModel _messageModel = MessageModel(
         textMessage: message,
@@ -40,16 +51,40 @@ class ChatProvider {
         userId: currentUser?.uid ?? UniqueKey().toString()
     );
 
-    FirebaseFirestore.instance
+    //set the message
+    DocumentReference<Map<String, dynamic>> _roomReference = await FirebaseFirestore.instance
       .collection(Strings.roomsCollection)
-      .doc(_ids[0]+":"+_ids[1])
+      .doc(roomId) //null to create new doc
       .collection(Strings.messagesCollection)
       .add(MessageModel.toMap(_messageModel)
-    );
-
+    ).catchError((error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
+      NavigationUtils.showMyDialog(
+          context: context,
+          bodyText: Strings.addMessageError
+      );
+    });
+    String _roomId = _roomReference.parent.parent?.id ?? "";
+    await FirebaseFirestore.instance
+      .collection(Strings.roomsCollection)
+      .doc(_roomId)
+      .set({
+      Strings.roomIdFirestore: _roomId,
+      Strings.lastMessageFirestore: message,
+      Strings.lastIdFirestore: _messageModel.userId,
+      Strings.lastDateMessageFirestore: _messageModel.timeMessage,
+      Strings.idsArrayFirestore: _ids,
+    }).catchError((error, stackTrace) {
+      ExceptionUtils.printCatchError(error: error, stackTrace: stackTrace);
+      NavigationUtils.showMyDialog(
+          context: context,
+          bodyText: Strings.addMessageError
+      );
+    });
+    return _roomId;
   }
 
-  static List<String> _sortIds(String peerId) {
+    static List<String> sortIds(String peerId) {
      List<String> _ids = [];
       String _currentUser = currentUser?.uid ?? UniqueKey().toString();
       _ids..add(_currentUser)
