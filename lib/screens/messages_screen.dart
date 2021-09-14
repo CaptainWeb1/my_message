@@ -150,10 +150,25 @@ class _ListRoomsBodyWidgetState extends State<ListRoomsBodyWidget> {
   List<RoomModel> _rooms = [];
   List<String> _roomIds = [];
 
+  void _createRoomLists() {
+    _rooms = widget.rooms;
+    _roomIds = widget.roomIds;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createRoomLists();
+  }
+
+  @override
+  void didUpdateWidget(covariant ListRoomsBodyWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _createRoomLists();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _rooms = [...widget.rooms];
-    _roomIds = [...widget.roomIds];
     return Column(
       children: [
         Padding(
@@ -162,11 +177,8 @@ class _ListRoomsBodyWidgetState extends State<ListRoomsBodyWidget> {
             textFieldParameters: SearchTextFieldParameters(hintText: Strings.filter),
             valueChanged: (value) {
               setState(() {
-                _rooms = [...widget.rooms];
-                _rooms.removeWhere((element) {
-                  bool _startWith = element.peerUser?.userName.startsWith(value) ?? false;
-                  return !_startWith;
-                });
+                _rooms = widget.rooms;
+                _rooms = _rooms.where((element) => (element.peerUser?.userName.startsWith(value)) ?? false).toList();
               });
             },
           ),
